@@ -225,7 +225,7 @@ make upload-pypi
 ### Dónde Pedir Ayuda:
 - **GitHub Issues**: Para bugs y features
 - **GitHub Discussions**: Para preguntas generales
-- **Email**: leonardo@hyblock.capital para consultas privadas
+- **Email**: ljofre2146@gmail.com para consultas privadas
 
 ### FAQ:
 
