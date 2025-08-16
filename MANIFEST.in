@@ -1,0 +1,43 @@
+# Include the license file
+include LICENSE
+
+# Include the readme files
+include README.md
+include QUICKSTART.md
+include PROJECT_SUMMARY.md
+
+# Include the configuration files
+include pyproject.toml
+include openapi-generator-config.json
+include generate_sdk.sh
+include Makefile
+include env.example
+
+# Include examples
+recursive-include examples *.py
+recursive-include examples *.md
+
+# Include type information
+recursive-include hyblock_capital_sdk py.typed
+
+# Exclude development files
+exclude .python-version
+exclude .gitignore
+exclude requirements.generated.txt
+exclude setup.py.generated
+
+# Exclude test files from distribution
+recursive-exclude tests *
+recursive-exclude htmlcov *
+
+# Exclude backup and generated files
+recursive-exclude . *.backup*
+recursive-exclude . __pycache__
+recursive-exclude . *.py[co]
+
+# Exclude development directories
+prune .venv
+prune .git
+prune .github
+prune .pytest_cache
+prune .mypy_cache
