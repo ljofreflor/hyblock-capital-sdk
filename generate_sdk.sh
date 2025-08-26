@@ -36,11 +36,27 @@ fi
 
 # Paso 1: Descargar la especificación OpenAPI de Hyblock Capital
 echo -e "${BLUE}Descargando especificación OpenAPI desde ${SWAGGER_URL}...${NC}"
-if curl -f -s -o "$SWAGGER_FILE" "$SWAGGER_URL"; then
-    echo -e "${GREEN} Especificación descargada exitosamente${NC}"
-else
-    echo -e "${RED} Error: No se pudo descargar la especificación OpenAPI${NC}"
+# Intentar descarga con retry logic
+download_success=false
+for attempt in {1..3}; do
+    echo -e "${YELLOW}Intento $attempt de 3...${NC}"
+    if curl -f -s --connect-timeout 15 --max-time 30 -o "$SWAGGER_FILE" "$SWAGGER_URL"; then
+        echo -e "${GREEN}✅ Especificación descargada exitosamente${NC}"
+        download_success=true
+        break
+    else
+        echo -e "${RED}⚠️ Intento $attempt falló${NC}"
+        if [ $attempt -lt 3 ]; then
+            echo -e "${YELLOW}Reintentando en 5 segundos...${NC}"
+            sleep 5
+        fi
+    fi
+done
+
+if [ "$download_success" = false ]; then
+    echo -e "${RED}❌ Error: No se pudo descargar la especificación OpenAPI después de 3 intentos${NC}"
     echo -e "${YELLOW}Verifica que la URL sea correcta: $SWAGGER_URL${NC}"
+    echo -e "${YELLOW}Verifica tu conexión a internet${NC}"
     exit 1
 fi
 
