@@ -1,6 +1,6 @@
 # Makefile para el SDK de Hyblock Capital
 
-.PHONY: help install generate clean test lint format docs build publish dev-setup
+.PHONY: help install generate generate-commit generate-push clean test lint format docs build publish dev-setup
 
 # Variables
 PYTHON := poetry run python
@@ -45,6 +45,26 @@ generate: ## Generar SDK desde OpenAPI
 	@echo " Generando SDK desde especificación OpenAPI..."
 	./generate_sdk.sh
 	@echo " SDK generado exitosamente"
+
+generate-commit: generate ## Generar SDK y crear commit [generate-sdk]
+	@echo " Creando commit con cambios del SDK..."
+	@if git diff --quiet -- hyblock_capital_sdk; then \
+		echo " No hay cambios en SDK, nada para commitear"; \
+	else \
+		git add hyblock_capital_sdk; \
+		git commit -m "chore(generate): update SDK from OpenAPI [generate-sdk]"; \
+		echo " Commit creado"; \
+	fi
+
+generate-push: ## Generar, commitear y pushear SDK
+	@$(MAKE) generate-commit
+	@last_msg=$$(git log -1 --pretty=%B 2>/dev/null || true); \
+	if echo "$$last_msg" | grep -q "chore(generate): update SDK from OpenAPI"; then \
+		echo " Pusheando cambios..."; \
+		git push origin $$(git rev-parse --abbrev-ref HEAD); \
+	else \
+		echo " No hay commit nuevo para pushear"; \
+	fi
 
 # Testing
 test: ## Ejecutar todos los tests
