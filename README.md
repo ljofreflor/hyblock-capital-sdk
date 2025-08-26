@@ -5,7 +5,9 @@
 [![Poetry](https://img.shields.io/badge/dependency%20manager-poetry-blue)](https://python-poetry.org/)
 [![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-green.svg)](https://swagger.io/specification/)
 
-SDK oficial de Python para la API de Hyblock Capital, generado automáticamente desde la especificación OpenAPI/Swagger.
+SDK no oficial de Python para la API de Hyblock Capital, generado automáticamente desde la especificación OpenAPI/Swagger.
+
+> **⚠️ Aviso**: Este es un SDK no oficial creado por la comunidad. No está afiliado, respaldado o mantenido oficialmente por Hyblock Capital.
 
 ## Características
 

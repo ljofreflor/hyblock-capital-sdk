@@ -63,7 +63,7 @@ setup_github_remote() {
         echo "Primero necesitas crear el repositorio en GitHub:"
         echo "1. Ve a: https://github.com/new"
         echo "2. Repository name: hyblock-capital-sdk"
-        echo "3. Description: SDK oficial para la API de Hyblock Capital"
+        echo "3. Description: SDK no oficial para la API de Hyblock Capital"
         echo "4. Público (necesario para PyPI)"
         echo "5. NO inicializar con README, .gitignore o LICENSE (ya los tenemos)"
         echo "6. Click 'Create repository'"
