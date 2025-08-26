@@ -1,0 +1,32 @@
+NOTICE - Third Party Software and Attributions
+===============================================
+
+This software contains auto-generated code created using OpenAPI Generator.
+
+## Auto-Generated Code Notice
+
+The API client code in this package was automatically generated from the 
+Hyblock Capital OpenAPI specification using OpenAPI Generator (https://openapi-generator.tech).
+
+Some generated files may contain placeholder contact information 
+(leonardo@hyblock.capital) that is part of the original API specification. 
+This does NOT imply any official affiliation with Hyblock Capital.
+
+## Actual Contact Information
+
+For issues related to this unofficial SDK:
+- Author: Leonardo Jofre
+- Email: ljofre2146@gmail.com
+- Repository: https://github.com/ljofreflor/hyblock-capital-sdk
+
+## OpenAPI Generator License
+
+OpenAPI Generator is licensed under the Apache License 2.0.
+More information: https://github.com/OpenAPITools/openapi-generator
+
+## Disclaimer
+
+This is an UNOFFICIAL SDK created by the community. It is NOT affiliated 
+with, endorsed by, or officially maintained by Hyblock Capital.
+
+Use of the Hyblock Capital API is subject to their terms of service.

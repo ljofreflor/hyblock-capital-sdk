@@ -296,16 +296,33 @@ poetry run flake8 hyblock_capital_sdk/
 poetry run mypy hyblock_capital_sdk/
 ```
 
-## Licencia
+## Licencias y Atribuciones
 
-Este proyecto está licenciado bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+### Licencia del SDK
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+### Dependencias de Terceros
+Para información detallada sobre las licencias de las dependencias utilizadas, consulta [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+
+### Atribuciones
+Consulta el archivo [NOTICE](NOTICE) para información sobre el código generado automáticamente y atribuciones.
+
+## Términos de Uso
+
+**IMPORTANTE**: Este SDK interactúa con la API de Hyblock Capital. El uso de esta API está sujeto a los términos de servicio de Hyblock Capital. Al usar este SDK, aceptas cumplir con dichos términos.
+
+- Este SDK no está afiliado oficialmente con Hyblock Capital
+- Los usuarios son responsables de cumplir con los términos de servicio de la API
+- El uso de la API puede estar sujeto a límites de tasa y otras restricciones
+- Los usuarios deben obtener las credenciales API apropiadas de Hyblock Capital
+
+Para más información sobre los términos de servicio de la API, visita el sitio oficial de Hyblock Capital.
 
 ## Soporte
 
-- **Documentación**: [docs.hyblock.capital](https://docs.hyblock.capital)
-- **Issues**: [GitHub Issues](https://github.com/hyblock-capital/hyblock-capital-sdk/issues)
-- **Email**: support@hyblock.capital
-- **Discord**: [Hyblock Capital Community](https://discord.gg/hyblock)
+- **Issues del SDK**: [GitHub Issues](https://github.com/ljofreflor/hyblock-capital-sdk/issues)
+- **Documentación de la API**: [docs.hyblock.capital](https://docs.hyblock.capital)
+- **Contacto**: ljofre2146@gmail.com
 
 ## Roadmap
 

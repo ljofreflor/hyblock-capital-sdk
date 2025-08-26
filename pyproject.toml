@@ -5,6 +5,12 @@ license = "MIT"
 description = "SDK no oficial para la API de Hyblock Capital - Cliente Python para trading de criptomonedas (Generado con OpenAPI Generator)"
 authors = ["Leonardo Jofre <ljofre2146@gmail.com>"]
 readme = "README.md"
+include = [
+    "LICENSE",
+    "NOTICE", 
+    "THIRD_PARTY_LICENSES.md",
+    "README.md"
+]
 homepage = "https://github.com/ljofreflor/hyblock-capital-sdk"
 repository = "https://github.com/ljofreflor/hyblock-capital-sdk"
 documentation = "https://docs.hyblock.capital/sdk"
