@@ -87,22 +87,48 @@ else
     exit 1
 fi
 
-# Paso 4: Mover archivos generados al directorio correcto
+# Paso 4: Mover archivos generados al directorio correcto (preservando wrappers y archivos personalizados)
 echo -e "${BLUE}Organizando archivos generados...${NC}"
 
-# Respaldar archivos existentes importantes si existen
-if [ -d "$FINAL_DIR" ]; then
-    echo -e "${YELLOW}  Respaldando directorio existente...${NC}"
-    mv "$FINAL_DIR" "${FINAL_DIR}.backup.$(date +%Y%m%d_%H%M%S)"
-fi
+GEN_DIR="$OUTPUT_DIR/hyblock_capital_sdk"
 
-# Mover el código generado
-if [ -d "$OUTPUT_DIR/hyblock_capital_sdk" ]; then
-    mv "$OUTPUT_DIR/hyblock_capital_sdk" "$FINAL_DIR"
-    echo -e "${GREEN} Código del SDK movido a $FINAL_DIR${NC}"
-else
+if [ ! -d "$GEN_DIR" ]; then
     echo -e "${RED}Error: No se encontró el directorio del paquete generado${NC}"
     exit 1
+fi
+
+# Asegurar directorio final
+mkdir -p "$FINAL_DIR"
+
+# Reemplazar solo rutas generadas conocidas, preservando wrappers (auth.py, client.py, __init__.py personalizado, etc.)
+declare -a GEN_SUBDIRS=("api" "models")
+declare -a GEN_FILES=("api_client.py" "api_response.py" "configuration.py" "exceptions.py" "rest.py")
+
+# Copiar subdirectorios generados
+for d in "${GEN_SUBDIRS[@]}"; do
+  if [ -d "$GEN_DIR/$d" ]; then
+    echo -e "${YELLOW}  Actualizando directorio generado: ${d}${NC}"
+    rm -rf "$FINAL_DIR/$d"
+    cp -R "$GEN_DIR/$d" "$FINAL_DIR/$d"
+  fi
+done
+
+# Copiar archivos generados
+for f in "${GEN_FILES[@]}"; do
+  if [ -f "$GEN_DIR/$f" ]; then
+    echo -e "${YELLOW}  Actualizando archivo generado: ${f}${NC}"
+    cp -f "$GEN_DIR/$f" "$FINAL_DIR/$f"
+  fi
+done
+
+# No sobrescribir __init__.py si ya existe uno personalizado
+if [ -f "$FINAL_DIR/__init__.py" ]; then
+  echo -e "${YELLOW}  Preservando __init__.py existente (personalizado)${NC}"
+else
+  if [ -f "$GEN_DIR/__init__.py" ]; then
+    cp -f "$GEN_DIR/__init__.py" "$FINAL_DIR/__init__.py"
+    echo -e "${GREEN}  __init__.py generado copiado${NC}"
+  fi
 fi
 
 # Paso 5: Copiar archivos de configuración útiles si se generaron
