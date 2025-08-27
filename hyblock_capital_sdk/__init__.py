@@ -123,9 +123,7 @@ __all__ = [
 from hyblock_capital_sdk.api.catalog_api import CatalogApi as CatalogApi
 from hyblock_capital_sdk.api.funding_rate_api import FundingRateApi as FundingRateApi
 from hyblock_capital_sdk.api.liquidity_api import LiquidityApi as LiquidityApi
-from hyblock_capital_sdk.api.longs_and_shorts_api import (
-    LongsAndShortsApi as LongsAndShortsApi,
-)
+from hyblock_capital_sdk.api.longs_and_shorts_api import LongsAndShortsApi as LongsAndShortsApi
 from hyblock_capital_sdk.api.open_interest_api import OpenInterestApi as OpenInterestApi
 from hyblock_capital_sdk.api.options_api import OptionsApi as OptionsApi
 from hyblock_capital_sdk.api.orderbook_api import OrderbookApi as OrderbookApi
@@ -146,81 +144,39 @@ from hyblock_capital_sdk.exceptions import ApiAttributeError as ApiAttributeErro
 from hyblock_capital_sdk.exceptions import ApiException as ApiException
 
 # import models into sdk package
-from hyblock_capital_sdk.models.anchored_binance_global_accounts import (
-    AnchoredBinanceGlobalAccounts as AnchoredBinanceGlobalAccounts,
-)
-from hyblock_capital_sdk.models.anchored_binance_top_trader_accounts import (
-    AnchoredBinanceTopTraderAccounts as AnchoredBinanceTopTraderAccounts,
-)
-from hyblock_capital_sdk.models.anchored_binance_top_trader_positions import (
-    AnchoredBinanceTopTraderPositions as AnchoredBinanceTopTraderPositions,
-)
-from hyblock_capital_sdk.models.anchored_binance_whale_retail_delta import (
-    AnchoredBinanceWhaleRetailDelta as AnchoredBinanceWhaleRetailDelta,
-)
+from hyblock_capital_sdk.models.anchored_binance_global_accounts import AnchoredBinanceGlobalAccounts as AnchoredBinanceGlobalAccounts
+from hyblock_capital_sdk.models.anchored_binance_top_trader_accounts import AnchoredBinanceTopTraderAccounts as AnchoredBinanceTopTraderAccounts
+from hyblock_capital_sdk.models.anchored_binance_top_trader_positions import AnchoredBinanceTopTraderPositions as AnchoredBinanceTopTraderPositions
+from hyblock_capital_sdk.models.anchored_binance_whale_retail_delta import AnchoredBinanceWhaleRetailDelta as AnchoredBinanceWhaleRetailDelta
 from hyblock_capital_sdk.models.anchored_cls import AnchoredCLS as AnchoredCLS
 from hyblock_capital_sdk.models.anchored_clsd import AnchoredCLSD as AnchoredCLSD
 from hyblock_capital_sdk.models.anchored_cvd import AnchoredCVD as AnchoredCVD
-from hyblock_capital_sdk.models.anchored_liq_levels_count import (
-    AnchoredLiqLevelsCount as AnchoredLiqLevelsCount,
-)
-from hyblock_capital_sdk.models.anchored_liq_levels_size import (
-    AnchoredLiqLevelsSize as AnchoredLiqLevelsSize,
-)
-from hyblock_capital_sdk.models.anchored_oi_delta import (
-    AnchoredOIDelta as AnchoredOIDelta,
-)
-from hyblock_capital_sdk.models.asks_increase_decrease import (
-    AsksIncreaseDecrease as AsksIncreaseDecrease,
-)
-from hyblock_capital_sdk.models.average_leverage_delta import (
-    AverageLeverageDelta as AverageLeverageDelta,
-)
-from hyblock_capital_sdk.models.average_leverage_used import (
-    AverageLeverageUsed as AverageLeverageUsed,
-)
+from hyblock_capital_sdk.models.anchored_liq_levels_count import AnchoredLiqLevelsCount as AnchoredLiqLevelsCount
+from hyblock_capital_sdk.models.anchored_liq_levels_size import AnchoredLiqLevelsSize as AnchoredLiqLevelsSize
+from hyblock_capital_sdk.models.anchored_oi_delta import AnchoredOIDelta as AnchoredOIDelta
+from hyblock_capital_sdk.models.asks_increase_decrease import AsksIncreaseDecrease as AsksIncreaseDecrease
+from hyblock_capital_sdk.models.average_leverage_delta import AverageLeverageDelta as AverageLeverageDelta
+from hyblock_capital_sdk.models.average_leverage_used import AverageLeverageUsed as AverageLeverageUsed
 from hyblock_capital_sdk.models.bid_ask import BidAsk as BidAsk
 from hyblock_capital_sdk.models.bid_ask_delta import BidAskDelta as BidAskDelta
 from hyblock_capital_sdk.models.bid_ask_ratio import BidAskRatio as BidAskRatio
-from hyblock_capital_sdk.models.bid_ask_ratio_diff import (
-    BidAskRatioDiff as BidAskRatioDiff,
-)
+from hyblock_capital_sdk.models.bid_ask_ratio_diff import BidAskRatioDiff as BidAskRatioDiff
 from hyblock_capital_sdk.models.bids_ask_spread import BidsAskSpread as BidsAskSpread
-from hyblock_capital_sdk.models.bids_increase_decrease import (
-    BidsIncreaseDecrease as BidsIncreaseDecrease,
-)
-from hyblock_capital_sdk.models.binance_global_accounts import (
-    BinanceGlobalAccounts as BinanceGlobalAccounts,
-)
-from hyblock_capital_sdk.models.binance_top_trader_accounts import (
-    BinanceTopTraderAccounts as BinanceTopTraderAccounts,
-)
-from hyblock_capital_sdk.models.binance_top_trader_positions import (
-    BinanceTopTraderPositions as BinanceTopTraderPositions,
-)
-from hyblock_capital_sdk.models.binance_true_retail_long_short import (
-    BinanceTrueRetailLongShort as BinanceTrueRetailLongShort,
-)
-from hyblock_capital_sdk.models.binance_whale_retail_delta import (
-    BinanceWhaleRetailDelta as BinanceWhaleRetailDelta,
-)
-from hyblock_capital_sdk.models.bitmex_leaderboard_notional_profit import (
-    BitmexLeaderboardNotionalProfit as BitmexLeaderboardNotionalProfit,
-)
-from hyblock_capital_sdk.models.bitmex_leaderboard_roe_profit import (
-    BitmexLeaderboardROEProfit as BitmexLeaderboardROEProfit,
-)
+from hyblock_capital_sdk.models.bids_increase_decrease import BidsIncreaseDecrease as BidsIncreaseDecrease
+from hyblock_capital_sdk.models.binance_global_accounts import BinanceGlobalAccounts as BinanceGlobalAccounts
+from hyblock_capital_sdk.models.binance_top_trader_accounts import BinanceTopTraderAccounts as BinanceTopTraderAccounts
+from hyblock_capital_sdk.models.binance_top_trader_positions import BinanceTopTraderPositions as BinanceTopTraderPositions
+from hyblock_capital_sdk.models.binance_true_retail_long_short import BinanceTrueRetailLongShort as BinanceTrueRetailLongShort
+from hyblock_capital_sdk.models.binance_whale_retail_delta import BinanceWhaleRetailDelta as BinanceWhaleRetailDelta
+from hyblock_capital_sdk.models.bitmex_leaderboard_notional_profit import BitmexLeaderboardNotionalProfit as BitmexLeaderboardNotionalProfit
+from hyblock_capital_sdk.models.bitmex_leaderboard_roe_profit import BitmexLeaderboardROEProfit as BitmexLeaderboardROEProfit
 from hyblock_capital_sdk.models.bot_tracker import BotTracker as BotTracker
 from hyblock_capital_sdk.models.buy_volume import BuyVolume as BuyVolume
 from hyblock_capital_sdk.models.bvol import Bvol as Bvol
-from hyblock_capital_sdk.models.bybit_global_accounts import (
-    BybitGlobalAccounts as BybitGlobalAccounts,
-)
+from hyblock_capital_sdk.models.bybit_global_accounts import BybitGlobalAccounts as BybitGlobalAccounts
 from hyblock_capital_sdk.models.catalog import Catalog as Catalog
 from hyblock_capital_sdk.models.combined_book import CombinedBook as CombinedBook
-from hyblock_capital_sdk.models.cumulative_liq_level import (
-    CumulativeLiqLevel as CumulativeLiqLevel,
-)
+from hyblock_capital_sdk.models.cumulative_liq_level import CumulativeLiqLevel as CumulativeLiqLevel
 from hyblock_capital_sdk.models.dvol import Dvol as Dvol
 from hyblock_capital_sdk.models.error400 import Error400 as Error400
 from hyblock_capital_sdk.models.error401 import Error401 as Error401
@@ -230,83 +186,39 @@ from hyblock_capital_sdk.models.error429 import Error429 as Error429
 from hyblock_capital_sdk.models.error500 import Error500 as Error500
 from hyblock_capital_sdk.models.fear_and_greed import FearAndGreed as FearAndGreed
 from hyblock_capital_sdk.models.funding_rate import FundingRate as FundingRate
-from hyblock_capital_sdk.models.huobi_top_trader_accounts import (
-    HuobiTopTraderAccounts as HuobiTopTraderAccounts,
-)
-from hyblock_capital_sdk.models.huobi_top_trader_positions import (
-    HuobiTopTraderPositions as HuobiTopTraderPositions,
-)
+from hyblock_capital_sdk.models.huobi_top_trader_accounts import HuobiTopTraderAccounts as HuobiTopTraderAccounts
+from hyblock_capital_sdk.models.huobi_top_trader_positions import HuobiTopTraderPositions as HuobiTopTraderPositions
 from hyblock_capital_sdk.models.klines import Klines as Klines
-from hyblock_capital_sdk.models.limit_order_average_size import (
-    LimitOrderAverageSize as LimitOrderAverageSize,
-)
-from hyblock_capital_sdk.models.limit_order_count import (
-    LimitOrderCount as LimitOrderCount,
-)
+from hyblock_capital_sdk.models.limit_order_average_size import LimitOrderAverageSize as LimitOrderAverageSize
+from hyblock_capital_sdk.models.limit_order_count import LimitOrderCount as LimitOrderCount
 from hyblock_capital_sdk.models.liquidation import Liquidation as Liquidation
-from hyblock_capital_sdk.models.liquidation_heatmap import (
-    LiquidationHeatmap as LiquidationHeatmap,
-)
-from hyblock_capital_sdk.models.liquidation_levels import (
-    LiquidationLevels as LiquidationLevels,
-)
-from hyblock_capital_sdk.models.margin_lending_ratio import (
-    MarginLendingRatio as MarginLendingRatio,
-)
-from hyblock_capital_sdk.models.market_order_average_size import (
-    MarketOrderAverageSize as MarketOrderAverageSize,
-)
-from hyblock_capital_sdk.models.market_order_count import (
-    MarketOrderCount as MarketOrderCount,
-)
+from hyblock_capital_sdk.models.liquidation_heatmap import LiquidationHeatmap as LiquidationHeatmap
+from hyblock_capital_sdk.models.liquidation_levels import LiquidationLevels as LiquidationLevels
+from hyblock_capital_sdk.models.margin_lending_ratio import MarginLendingRatio as MarginLendingRatio
+from hyblock_capital_sdk.models.market_order_average_size import MarketOrderAverageSize as MarketOrderAverageSize
+from hyblock_capital_sdk.models.market_order_count import MarketOrderCount as MarketOrderCount
 from hyblock_capital_sdk.models.net_long_short import NetLongShort as NetLongShort
-from hyblock_capital_sdk.models.net_long_short_delta import (
-    NetLongShortDelta as NetLongShortDelta,
-)
-from hyblock_capital_sdk.models.okx_global_accounts import (
-    OkxGlobalAccounts as OkxGlobalAccounts,
-)
-from hyblock_capital_sdk.models.okx_top_trader_accounts import (
-    OkxTopTraderAccounts as OkxTopTraderAccounts,
-)
-from hyblock_capital_sdk.models.okx_whale_retail_delta import (
-    OkxWhaleRetailDelta as OkxWhaleRetailDelta,
-)
+from hyblock_capital_sdk.models.net_long_short_delta import NetLongShortDelta as NetLongShortDelta
+from hyblock_capital_sdk.models.okx_global_accounts import OkxGlobalAccounts as OkxGlobalAccounts
+from hyblock_capital_sdk.models.okx_top_trader_accounts import OkxTopTraderAccounts as OkxTopTraderAccounts
+from hyblock_capital_sdk.models.okx_whale_retail_delta import OkxWhaleRetailDelta as OkxWhaleRetailDelta
 from hyblock_capital_sdk.models.open_interest import OpenInterest as OpenInterest
-from hyblock_capital_sdk.models.open_interest_delta import (
-    OpenInterestDelta as OpenInterestDelta,
-)
-from hyblock_capital_sdk.models.open_interest_profile import (
-    OpenInterestProfile as OpenInterestProfile,
-)
-from hyblock_capital_sdk.models.open_interest_profile_data_inner import (
-    OpenInterestProfileDataInner as OpenInterestProfileDataInner,
-)
-from hyblock_capital_sdk.models.participationratio import (
-    Participationratio as Participationratio,
-)
+from hyblock_capital_sdk.models.open_interest_delta import OpenInterestDelta as OpenInterestDelta
+from hyblock_capital_sdk.models.open_interest_profile import OpenInterestProfile as OpenInterestProfile
+from hyblock_capital_sdk.models.open_interest_profile_data_inner import OpenInterestProfileDataInner as OpenInterestProfileDataInner
+from hyblock_capital_sdk.models.participationratio import Participationratio as Participationratio
 from hyblock_capital_sdk.models.pd_levels import PdLevels as PdLevels
 from hyblock_capital_sdk.models.pm_levels import PmLevels as PmLevels
 from hyblock_capital_sdk.models.pw_levels import PwLevels as PwLevels
-from hyblock_capital_sdk.models.remaining_hit_balance import (
-    RemainingHitBalance as RemainingHitBalance,
-)
+from hyblock_capital_sdk.models.remaining_hit_balance import RemainingHitBalance as RemainingHitBalance
 from hyblock_capital_sdk.models.sell_volume import SellVolume as SellVolume
 from hyblock_capital_sdk.models.slippage import Slippage as Slippage
-from hyblock_capital_sdk.models.stablecoin_premium_p2_p import (
-    StablecoinPremiumP2P as StablecoinPremiumP2P,
-)
-from hyblock_capital_sdk.models.trader_sentiment_gap import (
-    TraderSentimentGap as TraderSentimentGap,
-)
-from hyblock_capital_sdk.models.transferofcontracts import (
-    Transferofcontracts as Transferofcontracts,
-)
+from hyblock_capital_sdk.models.stablecoin_premium_p2_p import StablecoinPremiumP2P as StablecoinPremiumP2P
+from hyblock_capital_sdk.models.trader_sentiment_gap import TraderSentimentGap as TraderSentimentGap
+from hyblock_capital_sdk.models.transferofcontracts import Transferofcontracts as Transferofcontracts
 from hyblock_capital_sdk.models.twitter import Twitter as Twitter
 from hyblock_capital_sdk.models.user_bot_ratio import UserBotRatio as UserBotRatio
 from hyblock_capital_sdk.models.volume_delta import VolumeDelta as VolumeDelta
 from hyblock_capital_sdk.models.volume_profile import VolumeProfile as VolumeProfile
 from hyblock_capital_sdk.models.wbtc_mint_burn import WbtcMintBurn as WbtcMintBurn
-from hyblock_capital_sdk.models.whale_position_dominance import (
-    WhalePositionDominance as WhalePositionDominance,
-)
+from hyblock_capital_sdk.models.whale_position_dominance import WhalePositionDominance as WhalePositionDominance

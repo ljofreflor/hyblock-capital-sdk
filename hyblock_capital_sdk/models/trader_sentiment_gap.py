@@ -23,12 +23,10 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-
 class TraderSentimentGap(BaseModel):
     """
     TraderSentimentGap
-    """  # noqa: E501
-
+    """ # noqa: E501
     open_date: Optional[StrictInt] = Field(default=None, alias="openDate")
     trader_sentiment_gap: Optional[Union[StrictFloat, StrictInt]] = None
     additional_properties: Dict[str, Any] = {}
@@ -39,6 +37,7 @@ class TraderSentimentGap(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,11 +64,9 @@ class TraderSentimentGap(BaseModel):
           are ignored.
         * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -92,15 +89,15 @@ class TraderSentimentGap(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "openDate": obj.get("openDate"),
-                "trader_sentiment_gap": obj.get("trader_sentiment_gap"),
-            }
-        )
+        _obj = cls.model_validate({
+            "openDate": obj.get("openDate"),
+            "trader_sentiment_gap": obj.get("trader_sentiment_gap")
+        })
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
+

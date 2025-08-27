@@ -52,71 +52,27 @@ class OrderflowApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
+
     @validate_call
     def anchored_cvd_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'.")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -167,7 +123,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_cvd_get_serialize(
             coin=coin,
@@ -183,20 +139,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredCVD",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredCVD",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -204,71 +161,27 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def anchored_cvd_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'.")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -319,7 +232,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_cvd_get_serialize(
             coin=coin,
@@ -335,20 +248,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredCVD",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredCVD",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -356,71 +270,27 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def anchored_cvd_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'.")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -471,7 +341,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_cvd_get_serialize(
             coin=coin,
@@ -487,22 +357,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredCVD",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredCVD",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _anchored_cvd_get_serialize(
         self,
@@ -521,9 +393,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -537,49 +411,68 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if anchor is not None:
-            _query_params.append(("anchor", anchor))
-
+            
+            _query_params.append(('anchor', anchor))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/anchoredCVD",
+            method='GET',
+            resource_path='/anchoredCVD',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -589,62 +482,30 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def bot_tracker_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -691,7 +552,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._bot_tracker_get_serialize(
             coin=coin,
@@ -705,20 +566,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "BotTracker",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "BotTracker",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -726,59 +588,25 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def bot_tracker_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -825,7 +653,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._bot_tracker_get_serialize(
             coin=coin,
@@ -839,20 +667,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "BotTracker",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "BotTracker",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -860,59 +689,25 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def bot_tracker_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -959,7 +754,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._bot_tracker_get_serialize(
             coin=coin,
@@ -973,22 +768,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "BotTracker",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "BotTracker",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _bot_tracker_get_serialize(
         self,
@@ -1005,9 +802,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1021,43 +820,60 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/botTracker",
+            method='GET',
+            resource_path='/botTracker',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1067,68 +883,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def buy_volume_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1177,7 +956,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._buy_volume_get_serialize(
             coin=coin,
@@ -1192,20 +971,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "BuyVolume",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "BuyVolume",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1213,65 +993,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def buy_volume_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1320,7 +1061,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._buy_volume_get_serialize(
             coin=coin,
@@ -1335,20 +1076,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "BuyVolume",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "BuyVolume",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1356,65 +1098,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def buy_volume_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1463,7 +1166,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._buy_volume_get_serialize(
             coin=coin,
@@ -1478,22 +1181,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "BuyVolume",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "BuyVolume",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _buy_volume_get_serialize(
         self,
@@ -1511,9 +1216,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1527,46 +1234,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/buyVolume",
+            method='GET',
+            resource_path='/buyVolume',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1576,56 +1301,29 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def klines_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1670,7 +1368,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._klines_get_serialize(
             coin=coin,
@@ -1683,20 +1381,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Klines",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Klines",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1704,53 +1403,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def klines_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1795,7 +1465,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._klines_get_serialize(
             coin=coin,
@@ -1808,20 +1478,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Klines",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Klines",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1829,53 +1500,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def klines_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1920,7 +1562,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._klines_get_serialize(
             coin=coin,
@@ -1933,22 +1575,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Klines",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Klines",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _klines_get_serialize(
         self,
@@ -1964,9 +1608,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1980,40 +1626,56 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/klines",
+            method='GET',
+            resource_path='/klines',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2023,68 +1685,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def limit_order_average_size_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2133,7 +1758,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._limit_order_average_size_get_serialize(
             coin=coin,
@@ -2148,20 +1773,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderAverageSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderAverageSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2169,65 +1795,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def limit_order_average_size_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2276,7 +1863,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._limit_order_average_size_get_serialize(
             coin=coin,
@@ -2291,20 +1878,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderAverageSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderAverageSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2312,65 +1900,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def limit_order_average_size_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2419,7 +1968,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._limit_order_average_size_get_serialize(
             coin=coin,
@@ -2434,22 +1983,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderAverageSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderAverageSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _limit_order_average_size_get_serialize(
         self,
@@ -2467,9 +2018,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -2483,46 +2036,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/limitOrderAverageSize",
+            method='GET',
+            resource_path='/limitOrderAverageSize',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2532,68 +2103,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def limit_order_count_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2642,7 +2176,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._limit_order_count_get_serialize(
             coin=coin,
@@ -2657,20 +2191,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2678,65 +2213,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def limit_order_count_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2785,7 +2281,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._limit_order_count_get_serialize(
             coin=coin,
@@ -2800,20 +2296,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2821,65 +2318,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def limit_order_count_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2928,7 +2386,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._limit_order_count_get_serialize(
             coin=coin,
@@ -2943,22 +2401,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _limit_order_count_get_serialize(
         self,
@@ -2976,9 +2436,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -2992,46 +2454,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/limitOrderCount",
+            method='GET',
+            resource_path='/limitOrderCount',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3041,68 +2521,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def market_order_average_size_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3151,7 +2594,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._market_order_average_size_get_serialize(
             coin=coin,
@@ -3166,20 +2609,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderAverageSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderAverageSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -3187,65 +2631,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def market_order_average_size_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3294,7 +2699,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._market_order_average_size_get_serialize(
             coin=coin,
@@ -3309,20 +2714,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderAverageSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderAverageSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -3330,65 +2736,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def market_order_average_size_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3437,7 +2804,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._market_order_average_size_get_serialize(
             coin=coin,
@@ -3452,22 +2819,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderAverageSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderAverageSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _market_order_average_size_get_serialize(
         self,
@@ -3485,9 +2854,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -3501,46 +2872,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/marketOrderAverageSize",
+            method='GET',
+            resource_path='/marketOrderAverageSize',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3550,68 +2939,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def market_order_count_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3660,7 +3012,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._market_order_count_get_serialize(
             coin=coin,
@@ -3675,20 +3027,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -3696,65 +3049,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def market_order_count_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3803,7 +3117,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._market_order_count_get_serialize(
             coin=coin,
@@ -3818,20 +3132,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -3839,65 +3154,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def market_order_count_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3946,7 +3222,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._market_order_count_get_serialize(
             coin=coin,
@@ -3961,22 +3237,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "MarketOrderCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "MarketOrderCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _market_order_count_get_serialize(
         self,
@@ -3994,9 +3272,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -4010,46 +3290,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/marketOrderCount",
+            method='GET',
+            resource_path='/marketOrderCount',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4059,56 +3357,29 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def participationratio_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -4153,7 +3424,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._participationratio_get_serialize(
             coin=coin,
@@ -4166,20 +3437,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Participationratio",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Participationratio",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -4187,53 +3459,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def participationratio_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -4278,7 +3521,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._participationratio_get_serialize(
             coin=coin,
@@ -4291,20 +3534,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Participationratio",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Participationratio",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -4312,53 +3556,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def participationratio_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -4403,7 +3618,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._participationratio_get_serialize(
             coin=coin,
@@ -4416,22 +3631,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Participationratio",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Participationratio",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _participationratio_get_serialize(
         self,
@@ -4447,9 +3664,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -4463,40 +3682,56 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/participationratio",
+            method='GET',
+            resource_path='/participationratio',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4506,56 +3741,29 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def pd_levels_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -4600,7 +3808,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pd_levels_get_serialize(
             coin=coin,
@@ -4613,20 +3821,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PdLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PdLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -4634,53 +3843,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def pd_levels_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -4725,7 +3905,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pd_levels_get_serialize(
             coin=coin,
@@ -4738,20 +3918,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PdLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PdLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -4759,53 +3940,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def pd_levels_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -4850,7 +4002,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pd_levels_get_serialize(
             coin=coin,
@@ -4863,22 +4015,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PdLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PdLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _pd_levels_get_serialize(
         self,
@@ -4894,9 +4048,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -4910,40 +4066,56 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/pdLevels",
+            method='GET',
+            resource_path='/pdLevels',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4953,51 +4125,29 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def pm_levels_get(
         self,
         coin: StrictStr,
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5042,7 +4192,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pm_levels_get_serialize(
             coin=coin,
@@ -5055,20 +4205,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PmLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PmLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5076,48 +4227,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def pm_levels_get_with_http_info(
         self,
         coin: StrictStr,
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5162,7 +4289,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pm_levels_get_serialize(
             coin=coin,
@@ -5175,20 +4302,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PmLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PmLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5196,48 +4324,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def pm_levels_get_without_preload_content(
         self,
         coin: StrictStr,
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5282,7 +4386,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pm_levels_get_serialize(
             coin=coin,
@@ -5295,22 +4399,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PmLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PmLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _pm_levels_get_serialize(
         self,
@@ -5326,9 +4432,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -5342,40 +4450,56 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/pmLevels",
+            method='GET',
+            resource_path='/pmLevels',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5385,56 +4509,29 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def pw_levels_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5479,7 +4576,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pw_levels_get_serialize(
             coin=coin,
@@ -5492,20 +4589,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PwLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PwLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5513,53 +4611,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def pw_levels_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5604,7 +4673,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pw_levels_get_serialize(
             coin=coin,
@@ -5617,20 +4686,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PwLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PwLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5638,53 +4708,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def pw_levels_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter only single exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5729,7 +4770,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._pw_levels_get_serialize(
             coin=coin,
@@ -5742,22 +4783,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PwLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "PwLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _pw_levels_get_serialize(
         self,
@@ -5773,9 +4816,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -5789,40 +4834,56 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/pwLevels",
+            method='GET',
+            resource_path='/pwLevels',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5832,68 +4893,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def sell_volume_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5942,7 +4966,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._sell_volume_get_serialize(
             coin=coin,
@@ -5957,20 +4981,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "SellVolume",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "SellVolume",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5978,65 +5003,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def sell_volume_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -6085,7 +5071,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._sell_volume_get_serialize(
             coin=coin,
@@ -6100,20 +5086,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "SellVolume",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "SellVolume",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -6121,65 +5108,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def sell_volume_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -6228,7 +5176,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._sell_volume_get_serialize(
             coin=coin,
@@ -6243,22 +5191,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "SellVolume",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "SellVolume",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _sell_volume_get_serialize(
         self,
@@ -6276,9 +5226,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -6292,46 +5244,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/sellVolume",
+            method='GET',
+            resource_path='/sellVolume',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6341,66 +5311,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def slippage_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        trade_type: Annotated[
-            Optional[StrictStr],
-            Field(description="Please select valid tradeType By default 'all'."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        trade_type: Annotated[Optional[StrictStr], Field(description="Please select valid tradeType By default 'all'.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -6449,7 +5384,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._slippage_get_serialize(
             coin=coin,
@@ -6464,20 +5399,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Slippage",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Slippage",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -6485,63 +5421,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def slippage_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        trade_type: Annotated[
-            Optional[StrictStr],
-            Field(description="Please select valid tradeType By default 'all'."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        trade_type: Annotated[Optional[StrictStr], Field(description="Please select valid tradeType By default 'all'.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -6590,7 +5489,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._slippage_get_serialize(
             coin=coin,
@@ -6605,20 +5504,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Slippage",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Slippage",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -6626,63 +5526,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def slippage_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        trade_type: Annotated[
-            Optional[StrictStr],
-            Field(description="Please select valid tradeType By default 'all'."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        trade_type: Annotated[Optional[StrictStr], Field(description="Please select valid tradeType By default 'all'.")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -6731,7 +5594,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._slippage_get_serialize(
             coin=coin,
@@ -6746,22 +5609,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Slippage",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Slippage",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _slippage_get_serialize(
         self,
@@ -6779,9 +5644,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -6795,46 +5662,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if trade_type is not None:
-            _query_params.append(("tradeType", trade_type))
-
+            
+            _query_params.append(('tradeType', trade_type))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/slippage",
+            method='GET',
+            resource_path='/slippage',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6844,56 +5729,29 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def transferofcontracts_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -6938,7 +5796,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._transferofcontracts_get_serialize(
             coin=coin,
@@ -6951,20 +5809,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Transferofcontracts",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Transferofcontracts",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -6972,53 +5831,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def transferofcontracts_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -7063,7 +5893,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._transferofcontracts_get_serialize(
             coin=coin,
@@ -7076,20 +5906,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Transferofcontracts",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Transferofcontracts",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -7097,53 +5928,24 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def transferofcontracts_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -7188,7 +5990,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._transferofcontracts_get_serialize(
             coin=coin,
@@ -7201,22 +6003,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Transferofcontracts",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Transferofcontracts",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _transferofcontracts_get_serialize(
         self,
@@ -7232,9 +6036,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -7248,40 +6054,56 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/transferofcontracts",
+            method='GET',
+            resource_path='/transferofcontracts',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -7291,68 +6113,31 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def volume_delta_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -7401,7 +6186,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._volume_delta_get_serialize(
             coin=coin,
@@ -7416,20 +6201,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VolumeDelta",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "VolumeDelta",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -7437,65 +6223,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def volume_delta_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -7544,7 +6291,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._volume_delta_get_serialize(
             coin=coin,
@@ -7559,20 +6306,21 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VolumeDelta",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "VolumeDelta",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -7580,65 +6328,26 @@ class OrderflowApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def volume_delta_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        market_types: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals)."
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        market_types: Annotated[Optional[StrictStr], Field(description="Please select the valid marketTypes (e.g. All, Spot, Perpetuals).")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[StrictStr], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -7687,7 +6396,7 @@ class OrderflowApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._volume_delta_get_serialize(
             coin=coin,
@@ -7702,22 +6411,24 @@ class OrderflowApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VolumeDelta",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "VolumeDelta",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _volume_delta_get_serialize(
         self,
@@ -7735,9 +6446,11 @@ class OrderflowApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -7751,46 +6464,64 @@ class OrderflowApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if market_types is not None:
-            _query_params.append(("marketTypes", market_types))
-
+            
+            _query_params.append(('marketTypes', market_types))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/volumeDelta",
+            method='GET',
+            resource_path='/volumeDelta',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -7800,5 +6531,7 @@ class OrderflowApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+

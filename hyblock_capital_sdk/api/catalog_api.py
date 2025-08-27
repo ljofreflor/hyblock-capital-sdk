@@ -39,33 +39,20 @@ class CatalogApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
+
     @validate_call
     def catalog_get(
         self,
-        endpoint_name: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid endpointName.</br> Default: List of all endpointNames."
-            ),
-        ] = None,
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid exchange name. Multiple exchanges are supported.</br> Default: List of all exchanges."
-            ),
-        ] = None,
-        symbol: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid symbol, Multiple symbols are supported.</br> Default: List of all symbols."
-            ),
-        ] = None,
+        endpoint_name: Annotated[Optional[StrictStr], Field(description="Please enter valid endpointName.</br> Default: List of all endpointNames.")] = None,
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter valid exchange name. Multiple exchanges are supported.</br> Default: List of all exchanges.")] = None,
+        symbol: Annotated[Optional[StrictStr], Field(description="Please enter valid symbol, Multiple symbols are supported.</br> Default: List of all symbols.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -102,7 +89,7 @@ class CatalogApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._catalog_get_serialize(
             endpoint_name=endpoint_name,
@@ -111,20 +98,21 @@ class CatalogApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Catalog",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Catalog",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -132,33 +120,20 @@ class CatalogApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def catalog_get_with_http_info(
         self,
-        endpoint_name: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid endpointName.</br> Default: List of all endpointNames."
-            ),
-        ] = None,
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid exchange name. Multiple exchanges are supported.</br> Default: List of all exchanges."
-            ),
-        ] = None,
-        symbol: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid symbol, Multiple symbols are supported.</br> Default: List of all symbols."
-            ),
-        ] = None,
+        endpoint_name: Annotated[Optional[StrictStr], Field(description="Please enter valid endpointName.</br> Default: List of all endpointNames.")] = None,
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter valid exchange name. Multiple exchanges are supported.</br> Default: List of all exchanges.")] = None,
+        symbol: Annotated[Optional[StrictStr], Field(description="Please enter valid symbol, Multiple symbols are supported.</br> Default: List of all symbols.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -195,7 +170,7 @@ class CatalogApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._catalog_get_serialize(
             endpoint_name=endpoint_name,
@@ -204,20 +179,21 @@ class CatalogApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Catalog",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Catalog",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -225,33 +201,20 @@ class CatalogApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def catalog_get_without_preload_content(
         self,
-        endpoint_name: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid endpointName.</br> Default: List of all endpointNames."
-            ),
-        ] = None,
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid exchange name. Multiple exchanges are supported.</br> Default: List of all exchanges."
-            ),
-        ] = None,
-        symbol: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter valid symbol, Multiple symbols are supported.</br> Default: List of all symbols."
-            ),
-        ] = None,
+        endpoint_name: Annotated[Optional[StrictStr], Field(description="Please enter valid endpointName.</br> Default: List of all endpointNames.")] = None,
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter valid exchange name. Multiple exchanges are supported.</br> Default: List of all exchanges.")] = None,
+        symbol: Annotated[Optional[StrictStr], Field(description="Please enter valid symbol, Multiple symbols are supported.</br> Default: List of all symbols.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -288,7 +251,7 @@ class CatalogApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._catalog_get_serialize(
             endpoint_name=endpoint_name,
@@ -297,22 +260,24 @@ class CatalogApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Catalog",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Catalog",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _catalog_get_serialize(
         self,
@@ -324,9 +289,11 @@ class CatalogApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -340,28 +307,40 @@ class CatalogApi:
         # process the path parameters
         # process the query parameters
         if endpoint_name is not None:
-            _query_params.append(("endpointName", endpoint_name))
-
+            
+            _query_params.append(('endpointName', endpoint_name))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if symbol is not None:
-            _query_params.append(("symbol", symbol))
-
+            
+            _query_params.append(('symbol', symbol))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/catalog",
+            method='GET',
+            resource_path='/catalog',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -371,5 +350,7 @@ class CatalogApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+

@@ -23,22 +23,14 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-
 class OkxGlobalAccounts(BaseModel):
     """
     OkxGlobalAccounts
-    """  # noqa: E501
-
+    """ # noqa: E501
     open_date: Optional[StrictInt] = Field(default=None, alias="openDate")
-    long_pct: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="longPct"
-    )
-    short_pct: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="shortPct"
-    )
-    ls_ratio: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="lsRatio"
-    )
+    long_pct: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="longPct")
+    short_pct: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="shortPct")
+    ls_ratio: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="lsRatio")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["openDate", "longPct", "shortPct", "lsRatio"]
 
@@ -47,6 +39,7 @@ class OkxGlobalAccounts(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -73,11 +66,9 @@ class OkxGlobalAccounts(BaseModel):
           are ignored.
         * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -100,17 +91,17 @@ class OkxGlobalAccounts(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "openDate": obj.get("openDate"),
-                "longPct": obj.get("longPct"),
-                "shortPct": obj.get("shortPct"),
-                "lsRatio": obj.get("lsRatio"),
-            }
-        )
+        _obj = cls.model_validate({
+            "openDate": obj.get("openDate"),
+            "longPct": obj.get("longPct"),
+            "shortPct": obj.get("shortPct"),
+            "lsRatio": obj.get("lsRatio")
+        })
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
+

@@ -46,65 +46,26 @@ class LiquidityApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
+
     @validate_call
     def anchored_liq_levels_count_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
-        level: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the level long or short. If you do not enter any value the default will be 'long'"
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'"
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
+        level: Annotated[Optional[StrictStr], Field(description="Please enter the level long or short. If you do not enter any value the default will be 'long'")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -153,7 +114,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_liq_levels_count_get_serialize(
             coin=coin,
@@ -168,20 +129,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredLiqLevelsCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredLiqLevelsCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -189,65 +151,26 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def anchored_liq_levels_count_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
-        level: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the level long or short. If you do not enter any value the default will be 'long'"
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'"
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
+        level: Annotated[Optional[StrictStr], Field(description="Please enter the level long or short. If you do not enter any value the default will be 'long'")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -296,7 +219,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_liq_levels_count_get_serialize(
             coin=coin,
@@ -311,20 +234,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredLiqLevelsCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredLiqLevelsCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -332,65 +256,26 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def anchored_liq_levels_count_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
-        level: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the level long or short. If you do not enter any value the default will be 'long'"
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'"
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
+        level: Annotated[Optional[StrictStr], Field(description="Please enter the level long or short. If you do not enter any value the default will be 'long'")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -439,7 +324,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_liq_levels_count_get_serialize(
             coin=coin,
@@ -454,22 +339,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredLiqLevelsCount",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredLiqLevelsCount",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _anchored_liq_levels_count_get_serialize(
         self,
@@ -487,9 +374,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -503,46 +392,64 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         if level is not None:
-            _query_params.append(("level", level))
-
+            
+            _query_params.append(('level', level))
+            
         if anchor is not None:
-            _query_params.append(("anchor", anchor))
-
+            
+            _query_params.append(('anchor', anchor))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/anchoredLiqLevelsCount",
+            method='GET',
+            resource_path='/anchoredLiqLevelsCount',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -552,68 +459,31 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def anchored_liq_levels_size_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
-        level: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the level long or short. If you do not enter any value the default will be 'long'."
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
+        level: Annotated[Optional[StrictStr], Field(description="Please enter the level long or short. If you do not enter any value the default will be 'long'.")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -662,7 +532,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_liq_levels_size_get_serialize(
             coin=coin,
@@ -677,20 +547,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredLiqLevelsSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredLiqLevelsSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -698,65 +569,26 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def anchored_liq_levels_size_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
-        level: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the level long or short. If you do not enter any value the default will be 'long'."
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
+        level: Annotated[Optional[StrictStr], Field(description="Please enter the level long or short. If you do not enter any value the default will be 'long'.")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -805,7 +637,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_liq_levels_size_get_serialize(
             coin=coin,
@@ -820,20 +652,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredLiqLevelsSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredLiqLevelsSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -841,65 +674,26 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def anchored_liq_levels_size_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
-        level: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the level long or short. If you do not enter any value the default will be 'long'."
-            ),
-        ] = None,
-        anchor: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
+        level: Annotated[Optional[StrictStr], Field(description="Please enter the level long or short. If you do not enter any value the default will be 'long'.")] = None,
+        anchor: Annotated[Optional[StrictStr], Field(description="Please enter the anchor period (e.g. 1d, 1h, 4h). If you do not enter any value the default will be '1d'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -948,7 +742,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._anchored_liq_levels_size_get_serialize(
             coin=coin,
@@ -963,22 +757,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AnchoredLiqLevelsSize",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AnchoredLiqLevelsSize",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _anchored_liq_levels_size_get_serialize(
         self,
@@ -996,9 +792,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1012,46 +810,64 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         if level is not None:
-            _query_params.append(("level", level))
-
+            
+            _query_params.append(('level', level))
+            
         if anchor is not None:
-            _query_params.append(("anchor", anchor))
-
+            
+            _query_params.append(('anchor', anchor))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/anchoredLiqLevelsSize",
+            method='GET',
+            resource_path='/anchoredLiqLevelsSize',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1061,46 +877,28 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def average_leverage_delta_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please enter the valid startTime (e.g. 1661236020)."),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please enter the valid endTime (e.g. 1661236035)."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1143,7 +941,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._average_leverage_delta_get_serialize(
             coin=coin,
@@ -1155,20 +953,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AverageLeverageDelta",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AverageLeverageDelta",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1176,43 +975,23 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def average_leverage_delta_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please enter the valid startTime (e.g. 1661236020)."),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please enter the valid endTime (e.g. 1661236035)."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1255,7 +1034,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._average_leverage_delta_get_serialize(
             coin=coin,
@@ -1267,20 +1046,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AverageLeverageDelta",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AverageLeverageDelta",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1288,43 +1068,23 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def average_leverage_delta_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please enter the valid startTime (e.g. 1661236020)."),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please enter the valid endTime (e.g. 1661236035)."),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime (e.g. 1661236035).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1367,7 +1127,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._average_leverage_delta_get_serialize(
             coin=coin,
@@ -1379,22 +1139,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AverageLeverageDelta",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AverageLeverageDelta",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _average_leverage_delta_get_serialize(
         self,
@@ -1409,9 +1171,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1425,37 +1189,52 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/averageLeverageDelta",
+            method='GET',
+            resource_path='/averageLeverageDelta',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1465,50 +1244,28 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def average_leverage_used_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1551,7 +1308,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._average_leverage_used_get_serialize(
             coin=coin,
@@ -1563,20 +1320,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AverageLeverageUsed",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AverageLeverageUsed",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1584,47 +1342,23 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def average_leverage_used_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1667,7 +1401,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._average_leverage_used_get_serialize(
             coin=coin,
@@ -1679,20 +1413,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AverageLeverageUsed",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AverageLeverageUsed",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1700,47 +1435,23 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def average_leverage_used_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr,
-            Field(
-                description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d)."
-            ),
-        ],
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the valid timeframe By Default 1m (e.g. 1m, 5m, 15m, 1h, 4h, 1d).")],
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020).")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1783,7 +1494,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._average_leverage_used_get_serialize(
             coin=coin,
@@ -1795,22 +1506,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AverageLeverageUsed",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "AverageLeverageUsed",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _average_leverage_used_get_serialize(
         self,
@@ -1825,9 +1538,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1841,37 +1556,52 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/averageLeverageUsed",
+            method='GET',
+            resource_path='/averageLeverageUsed',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1881,42 +1611,26 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def cumulative_liq_level_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin, All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all)."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin, All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please enter the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1955,7 +1669,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._cumulative_liq_level_get_serialize(
             coin=coin,
@@ -1965,20 +1679,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CumulativeLiqLevel",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "CumulativeLiqLevel",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1986,39 +1701,21 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def cumulative_liq_level_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin, All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all)."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin, All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please enter the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2057,7 +1754,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._cumulative_liq_level_get_serialize(
             coin=coin,
@@ -2067,20 +1764,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CumulativeLiqLevel",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "CumulativeLiqLevel",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2088,39 +1786,21 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def cumulative_liq_level_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin, All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all)."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin, All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please enter the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2159,7 +1839,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._cumulative_liq_level_get_serialize(
             coin=coin,
@@ -2169,22 +1849,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "CumulativeLiqLevel",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "CumulativeLiqLevel",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _cumulative_liq_level_get_serialize(
         self,
@@ -2197,9 +1879,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -2213,31 +1897,44 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if timestamp is not None:
-            _query_params.append(("timestamp", timestamp))
-
+            
+            _query_params.append(('timestamp', timestamp))
+            
         if leverage is not None:
-            _query_params.append(("leverage", leverage))
-
+            
+            _query_params.append(('leverage', leverage))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/cumulativeLiqLevel",
+            method='GET',
+            resource_path='/cumulativeLiqLevel',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2247,59 +1944,30 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def liquidation_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr, Field(description="Please select the timeframe.")
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe.")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2346,7 +2014,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_get_serialize(
             coin=coin,
@@ -2360,20 +2028,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Liquidation",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Liquidation",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2381,56 +2050,25 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def liquidation_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr, Field(description="Please select the timeframe.")
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe.")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2477,7 +2115,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_get_serialize(
             coin=coin,
@@ -2491,20 +2129,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Liquidation",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Liquidation",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2512,56 +2151,25 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def liquidation_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timeframe: Annotated[
-            StrictStr, Field(description="Please select the timeframe.")
-        ],
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges"
-            ),
-        ] = None,
-        sort: Annotated[
-            Optional[StrictStr],
-            Field(description="If desc, will sort results newest first."),
-        ] = None,
-        start_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        end_time: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(
-                description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        bucket: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All"
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Union[StrictFloat, StrictInt]],
-            Field(description="Please select the limit size."),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        timeframe: Annotated[StrictStr, Field(description="Please select the timeframe.")],
+        exchange: Annotated[Optional[StrictStr], Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.</br> Default: All exchanges")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="If desc, will sort results newest first.")] = None,
+        start_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid startTime.If you do not enter any startTime the default will be the current time (e.g. 1661236020).")] = None,
+        end_time: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please enter the valid endTime.If you do not enter any endTime the default will be the current time (e.g. 1661236020).")] = None,
+        bucket: Annotated[Optional[StrictStr], Field(description="You can enter one or multiple buckets with comma seperated, you can add the buckets. so if user types in 1,2,3 it will do 1+2+3 as a sum.  1 = 0-100 2=100-1k 3 = 1k-10k 4=10k-100k 5= 100k-1m 6=1m-10m 7= >10m.</br> Default: All")] = None,
+        limit: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="Please select the limit size.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2608,7 +2216,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_get_serialize(
             coin=coin,
@@ -2622,22 +2230,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Liquidation",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "Liquidation",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _liquidation_get_serialize(
         self,
@@ -2654,9 +2264,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -2670,43 +2282,60 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if timeframe is not None:
-            _query_params.append(("timeframe", timeframe))
-
+            
+            _query_params.append(('timeframe', timeframe))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if sort is not None:
-            _query_params.append(("sort", sort))
-
+            
+            _query_params.append(('sort', sort))
+            
         if start_time is not None:
-            _query_params.append(("startTime", start_time))
-
+            
+            _query_params.append(('startTime', start_time))
+            
         if end_time is not None:
-            _query_params.append(("endTime", end_time))
-
+            
+            _query_params.append(('endTime', end_time))
+            
         if bucket is not None:
-            _query_params.append(("bucket", bucket))
-
+            
+            _query_params.append(('bucket', bucket))
+            
         if limit is not None:
-            _query_params.append(("limit", limit))
-
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/liquidation",
+            method='GET',
+            resource_path='/liquidation',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2716,58 +2345,29 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def liquidation_heatmap_get(
         self,
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        lookback: Annotated[
-            StrictStr,
-            Field(
-                description="Please select valid lookback (e.g. 12h, 7d, 1m, 3m, 6m, 1y, 2y)."
-            ),
-        ],
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        ohlcgraph: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid OHLCGraph, Defaults to the first exchange or only exchange input."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid leverage. By default: [L1, L2, L3, L4, L5]"
-            ),
-        ] = None,
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        scaling: Annotated[
-            Optional[StrictStr],
-            Field(description="Please select valid scale, Default is 'relative'."),
-        ] = None,
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        lookback: Annotated[StrictStr, Field(description="Please select valid lookback (e.g. 12h, 7d, 1m, 3m, 6m, 1y, 2y).")],
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        ohlcgraph: Annotated[Optional[StrictStr], Field(description="Please enter the valid OHLCGraph, Defaults to the first exchange or only exchange input.")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please enter the valid leverage. By default: [L1, L2, L3, L4, L5]")] = None,
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        scaling: Annotated[Optional[StrictStr], Field(description="Please select valid scale, Default is 'relative'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2812,7 +2412,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_heatmap_get_serialize(
             exchange=exchange,
@@ -2825,20 +2425,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LiquidationHeatmap",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "LiquidationHeatmap",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2846,55 +2447,24 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def liquidation_heatmap_get_with_http_info(
         self,
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        lookback: Annotated[
-            StrictStr,
-            Field(
-                description="Please select valid lookback (e.g. 12h, 7d, 1m, 3m, 6m, 1y, 2y)."
-            ),
-        ],
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        ohlcgraph: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid OHLCGraph, Defaults to the first exchange or only exchange input."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid leverage. By default: [L1, L2, L3, L4, L5]"
-            ),
-        ] = None,
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        scaling: Annotated[
-            Optional[StrictStr],
-            Field(description="Please select valid scale, Default is 'relative'."),
-        ] = None,
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        lookback: Annotated[StrictStr, Field(description="Please select valid lookback (e.g. 12h, 7d, 1m, 3m, 6m, 1y, 2y).")],
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        ohlcgraph: Annotated[Optional[StrictStr], Field(description="Please enter the valid OHLCGraph, Defaults to the first exchange or only exchange input.")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please enter the valid leverage. By default: [L1, L2, L3, L4, L5]")] = None,
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        scaling: Annotated[Optional[StrictStr], Field(description="Please select valid scale, Default is 'relative'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2939,7 +2509,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_heatmap_get_serialize(
             exchange=exchange,
@@ -2952,20 +2522,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LiquidationHeatmap",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "LiquidationHeatmap",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2973,55 +2544,24 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def liquidation_heatmap_get_without_preload_content(
         self,
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        lookback: Annotated[
-            StrictStr,
-            Field(
-                description="Please select valid lookback (e.g. 12h, 7d, 1m, 3m, 6m, 1y, 2y)."
-            ),
-        ],
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        ohlcgraph: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid OHLCGraph, Defaults to the first exchange or only exchange input."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid leverage. By default: [L1, L2, L3, L4, L5]"
-            ),
-        ] = None,
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        scaling: Annotated[
-            Optional[StrictStr],
-            Field(description="Please select valid scale, Default is 'relative'."),
-        ] = None,
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, you can enter single or multiple exchanges with comma seperated, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        lookback: Annotated[StrictStr, Field(description="Please select valid lookback (e.g. 12h, 7d, 1m, 3m, 6m, 1y, 2y).")],
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        ohlcgraph: Annotated[Optional[StrictStr], Field(description="Please enter the valid OHLCGraph, Defaults to the first exchange or only exchange input.")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please enter the valid leverage. By default: [L1, L2, L3, L4, L5]")] = None,
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        scaling: Annotated[Optional[StrictStr], Field(description="Please select valid scale, Default is 'relative'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3066,7 +2606,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_heatmap_get_serialize(
             exchange=exchange,
@@ -3079,22 +2619,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LiquidationHeatmap",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "LiquidationHeatmap",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _liquidation_heatmap_get_serialize(
         self,
@@ -3110,9 +2652,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -3126,40 +2670,56 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if lookback is not None:
-            _query_params.append(("lookback", lookback))
-
+            
+            _query_params.append(('lookback', lookback))
+            
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if ohlcgraph is not None:
-            _query_params.append(("ohlcgraph", ohlcgraph))
-
+            
+            _query_params.append(('ohlcgraph', ohlcgraph))
+            
         if leverage is not None:
-            _query_params.append(("leverage", leverage))
-
+            
+            _query_params.append(('leverage', leverage))
+            
         if timestamp is not None:
-            _query_params.append(("timestamp", timestamp))
-
+            
+            _query_params.append(('timestamp', timestamp))
+            
         if scaling is not None:
-            _query_params.append(("scaling", scaling))
-
+            
+            _query_params.append(('scaling', scaling))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/liquidationHeatmap",
+            method='GET',
+            resource_path='/liquidationHeatmap',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3169,48 +2729,27 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+
+
 
     @validate_call
     def liquidation_levels_get(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all)."
-            ),
-        ] = None,
-        position: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid position.You can entered only single parementer (e.g. long,short,all)."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please select the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all).")] = None,
+        position: Annotated[Optional[StrictStr], Field(description="Please select the valid position.You can entered only single parementer (e.g. long,short,all).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3251,7 +2790,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_levels_get_serialize(
             coin=coin,
@@ -3262,20 +2801,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LiquidationLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "LiquidationLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -3283,45 +2823,22 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         ).data
 
+
     @validate_call
     def liquidation_levels_get_with_http_info(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all)."
-            ),
-        ] = None,
-        position: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid position.You can entered only single parementer (e.g. long,short,all)."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please select the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all).")] = None,
+        position: Annotated[Optional[StrictStr], Field(description="Please select the valid position.You can entered only single parementer (e.g. long,short,all).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3362,7 +2879,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_levels_get_serialize(
             coin=coin,
@@ -3373,20 +2890,21 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LiquidationLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "LiquidationLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -3394,45 +2912,22 @@ class LiquidityApi:
             response_types_map=_response_types_map,
         )
 
+
     @validate_call
     def liquidation_levels_get_without_preload_content(
         self,
-        coin: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        exchange: Annotated[
-            StrictStr,
-            Field(
-                description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint."
-            ),
-        ],
-        timestamp: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020)."
-            ),
-        ] = None,
-        leverage: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all)."
-            ),
-        ] = None,
-        position: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Please select the valid position.You can entered only single parementer (e.g. long,short,all)."
-            ),
-        ] = None,
+        coin: Annotated[StrictStr, Field(description="Please enter the valid coin. All the supported coins with their respective exchanges can be fetched via “/catalog” endpoint.")],
+        exchange: Annotated[StrictStr, Field(description="Please enter the valid exchange, All the supported exchanges with their respective coins can be fetched via “/catalog” endpoint.")],
+        timestamp: Annotated[Optional[StrictStr], Field(description="Please enter the valid timestamp.If you do not enter any timestamp the default will be the current time (e.g. 1661236020).")] = None,
+        leverage: Annotated[Optional[StrictStr], Field(description="Please select the valid leverage.You can entered single or multiple parementers with comma seprated (e.g. 25,50,100,all).")] = None,
+        position: Annotated[Optional[StrictStr], Field(description="Please select the valid position.You can entered only single parementer (e.g. long,short,all).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3473,7 +2968,7 @@ class LiquidityApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._liquidation_levels_get_serialize(
             coin=coin,
@@ -3484,22 +2979,24 @@ class LiquidityApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index,
+            _host_index=_host_index
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LiquidationLevels",
-            "400": "Error400",
-            "401": "Error401",
-            "403": "Error403",
-            "404": "Error404",
-            "429": "Error429",
-            "500": "Error500",
+            '200': "LiquidationLevels",
+            '400': "Error400",
+            '401': "Error401",
+            '403': "Error403",
+            '404': "Error404",
+            '429': "Error429",
+            '500': "Error500",
         }
         response_data = self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
+            *_param,
+            _request_timeout=_request_timeout
         )
         return response_data.response
+
 
     def _liquidation_levels_get_serialize(
         self,
@@ -3513,9 +3010,11 @@ class LiquidityApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
+
         _host = None
 
-        _collection_formats: Dict[str, str] = {}
+        _collection_formats: Dict[str, str] = {
+        }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -3529,34 +3028,48 @@ class LiquidityApi:
         # process the path parameters
         # process the query parameters
         if coin is not None:
-            _query_params.append(("coin", coin))
-
+            
+            _query_params.append(('coin', coin))
+            
         if exchange is not None:
-            _query_params.append(("exchange", exchange))
-
+            
+            _query_params.append(('exchange', exchange))
+            
         if timestamp is not None:
-            _query_params.append(("timestamp", timestamp))
-
+            
+            _query_params.append(('timestamp', timestamp))
+            
         if leverage is not None:
-            _query_params.append(("leverage", leverage))
-
+            
+            _query_params.append(('leverage', leverage))
+            
         if position is not None:
-            _query_params.append(("position", position))
-
+            
+            _query_params.append(('position', position))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(["*/*"])
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    '*/*'
+                ]
+            )
+
 
         # authentication setting
-        _auth_settings: List[str] = ["Api Key", "Client Credentials"]
+        _auth_settings: List[str] = [
+            'Api Key', 
+            'Client Credentials'
+        ]
 
         return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/liquidationLevels",
+            method='GET',
+            resource_path='/liquidationLevels',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3566,5 +3079,7 @@ class LiquidityApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth,
+            _request_auth=_request_auth
         )
+
+

@@ -23,47 +23,26 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-
 class CumulativeLiqLevel(BaseModel):
     """
     CumulativeLiqLevel
-    """  # noqa: E501
-
+    """ # noqa: E501
     timestamp: Optional[StrictInt] = None
-    total_long_liquidation_size: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="totalLongLiquidationSize"
-    )
-    total_long_liquidation_count: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="totalLongLiquidationCount"
-    )
-    total_short_liquidation_size: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="totalShortLiquidationSize"
-    )
-    total_short_liquidation_count: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="totalShortLiquidationCount"
-    )
-    total_size_liquidation_delta: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="totalSizeLiquidationDelta"
-    )
-    total_count_liquidation_delta: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="totalCountLiquidationDelta"
-    )
+    total_long_liquidation_size: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalLongLiquidationSize")
+    total_long_liquidation_count: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalLongLiquidationCount")
+    total_short_liquidation_size: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalShortLiquidationSize")
+    total_short_liquidation_count: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalShortLiquidationCount")
+    total_size_liquidation_delta: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalSizeLiquidationDelta")
+    total_count_liquidation_delta: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalCountLiquidationDelta")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "timestamp",
-        "totalLongLiquidationSize",
-        "totalLongLiquidationCount",
-        "totalShortLiquidationSize",
-        "totalShortLiquidationCount",
-        "totalSizeLiquidationDelta",
-        "totalCountLiquidationDelta",
-    ]
+    __properties: ClassVar[List[str]] = ["timestamp", "totalLongLiquidationSize", "totalLongLiquidationCount", "totalShortLiquidationSize", "totalShortLiquidationCount", "totalSizeLiquidationDelta", "totalCountLiquidationDelta"]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -90,11 +69,9 @@ class CumulativeLiqLevel(BaseModel):
           are ignored.
         * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -117,20 +94,20 @@ class CumulativeLiqLevel(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "timestamp": obj.get("timestamp"),
-                "totalLongLiquidationSize": obj.get("totalLongLiquidationSize"),
-                "totalLongLiquidationCount": obj.get("totalLongLiquidationCount"),
-                "totalShortLiquidationSize": obj.get("totalShortLiquidationSize"),
-                "totalShortLiquidationCount": obj.get("totalShortLiquidationCount"),
-                "totalSizeLiquidationDelta": obj.get("totalSizeLiquidationDelta"),
-                "totalCountLiquidationDelta": obj.get("totalCountLiquidationDelta"),
-            }
-        )
+        _obj = cls.model_validate({
+            "timestamp": obj.get("timestamp"),
+            "totalLongLiquidationSize": obj.get("totalLongLiquidationSize"),
+            "totalLongLiquidationCount": obj.get("totalLongLiquidationCount"),
+            "totalShortLiquidationSize": obj.get("totalShortLiquidationSize"),
+            "totalShortLiquidationCount": obj.get("totalShortLiquidationCount"),
+            "totalSizeLiquidationDelta": obj.get("totalSizeLiquidationDelta"),
+            "totalCountLiquidationDelta": obj.get("totalCountLiquidationDelta")
+        })
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
+

@@ -20,23 +20,17 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from hyblock_capital_sdk.models.open_interest_profile_data_inner import (
-    OpenInterestProfileDataInner,
-)
+from hyblock_capital_sdk.models.open_interest_profile_data_inner import OpenInterestProfileDataInner
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class VolumeProfile(BaseModel):
     """
     VolumeProfile
-    """  # noqa: E501
-
+    """ # noqa: E501
     start_date: Optional[StrictInt] = Field(default=None, alias="startDate")
     end_date: Optional[StrictInt] = Field(default=None, alias="endDate")
-    current_price: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="currentPrice"
-    )
+    current_price: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="currentPrice")
     data: Optional[List[OpenInterestProfileDataInner]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["startDate", "endDate", "currentPrice", "data"]
@@ -46,6 +40,7 @@ class VolumeProfile(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -72,11 +67,9 @@ class VolumeProfile(BaseModel):
           are ignored.
         * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -89,7 +82,7 @@ class VolumeProfile(BaseModel):
             for _item_data in self.data:
                 if _item_data:
                     _items.append(_item_data.to_dict())
-            _dict["data"] = _items
+            _dict['data'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -106,22 +99,17 @@ class VolumeProfile(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "startDate": obj.get("startDate"),
-                "endDate": obj.get("endDate"),
-                "currentPrice": obj.get("currentPrice"),
-                "data": [
-                    OpenInterestProfileDataInner.from_dict(_item)
-                    for _item in obj["data"]
-                ]
-                if obj.get("data") is not None
-                else None,
-            }
-        )
+        _obj = cls.model_validate({
+            "startDate": obj.get("startDate"),
+            "endDate": obj.get("endDate"),
+            "currentPrice": obj.get("currentPrice"),
+            "data": [OpenInterestProfileDataInner.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
+        })
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
+
+
