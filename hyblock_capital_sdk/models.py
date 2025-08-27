@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field, validator, ConfigDict
 
 class OrderStatus(str, Enum):
     """Estados posibles de una orden."""
+
     PENDING = "pending"
     OPEN = "open"
     PARTIALLY_FILLED = "partially_filled"
@@ -25,6 +26,7 @@ class OrderStatus(str, Enum):
 
 class OrderType(str, Enum):
     """Tipos de órdenes disponibles."""
+
     MARKET = "market"
     LIMIT = "limit"
     STOP = "stop"
@@ -35,18 +37,21 @@ class OrderType(str, Enum):
 
 class OrderSide(str, Enum):
     """Lado de la orden (compra o venta)."""
+
     BUY = "buy"
     SELL = "sell"
 
 
 class PositionSide(str, Enum):
     """Lado de la posición (long o short)."""
+
     LONG = "long"
     SHORT = "short"
 
 
 class TimeInForce(str, Enum):
     """Duración de la orden."""
+
     GTC = "gtc"  # Good Till Cancelled
     IOC = "ioc"  # Immediate Or Cancel
     FOK = "fok"  # Fill Or Kill
@@ -55,6 +60,7 @@ class TimeInForce(str, Enum):
 
 class BaseHyblockModel(BaseModel):
     """Modelo base para todos los modelos del SDK."""
+
     model_config = ConfigDict(
         str_strip_whitespace=True,
         validate_assignment=True,
@@ -62,14 +68,14 @@ class BaseHyblockModel(BaseModel):
         json_encoders={
             datetime: lambda dt: dt.isoformat(),
             Decimal: lambda d: str(d),
-        }
+        },
     )
 
 
 class Account(BaseHyblockModel):
     """
     Información de la cuenta del usuario.
-    
+
     Attributes:
         id: Identificador único de la cuenta
         email: Email del usuario
@@ -81,6 +87,7 @@ class Account(BaseHyblockModel):
         created_at: Fecha de creación de la cuenta
         updated_at: Fecha de última actualización
     """
+
     id: str
     email: str
     username: str
@@ -95,7 +102,7 @@ class Account(BaseHyblockModel):
 class Balance(BaseHyblockModel):
     """
     Balance de un activo en la cuenta.
-    
+
     Attributes:
         asset: Símbolo del activo (ej: BTC, ETH, USDT)
         free: Cantidad disponible para trading
@@ -103,24 +110,25 @@ class Balance(BaseHyblockModel):
         total: Cantidad total (free + locked)
         usd_value: Valor en USD del balance total
     """
+
     asset: str
     free: Decimal = Field(ge=0)
-    locked: Decimal = Field(ge=0, default=Decimal('0'))
+    locked: Decimal = Field(ge=0, default=Decimal("0"))
     total: Decimal = Field(ge=0)
     usd_value: Optional[Decimal] = Field(ge=0, default=None)
-    
-    @validator('total', always=True)
+
+    @validator("total", always=True)
     def calculate_total(cls, v, values):
         """Calcula el total automáticamente si no se proporciona."""
         if v is None:
-            return values.get('free', Decimal('0')) + values.get('locked', Decimal('0'))
+            return values.get("free", Decimal("0")) + values.get("locked", Decimal("0"))
         return v
 
 
 class Order(BaseHyblockModel):
     """
     Información de una orden de trading.
-    
+
     Attributes:
         id: Identificador único de la orden
         symbol: Par de trading (ej: BTC/USDT)
@@ -139,13 +147,14 @@ class Order(BaseHyblockModel):
         created_at: Fecha de creación
         updated_at: Fecha de última actualización
     """
+
     id: str
     symbol: str
     side: OrderSide
     type: OrderType
     amount: Decimal = Field(gt=0)
     price: Optional[Decimal] = Field(gt=0, default=None)
-    filled_amount: Decimal = Field(ge=0, default=Decimal('0'))
+    filled_amount: Decimal = Field(ge=0, default=Decimal("0"))
     remaining_amount: Decimal = Field(ge=0)
     status: OrderStatus
     time_in_force: TimeInForce = TimeInForce.GTC
@@ -155,19 +164,21 @@ class Order(BaseHyblockModel):
     fee_asset: Optional[str] = None
     created_at: datetime
     updated_at: datetime
-    
-    @validator('remaining_amount', always=True)
+
+    @validator("remaining_amount", always=True)
     def calculate_remaining(cls, v, values):
         """Calcula la cantidad restante automáticamente."""
         if v is None:
-            return values.get('amount', Decimal('0')) - values.get('filled_amount', Decimal('0'))
+            return values.get("amount", Decimal("0")) - values.get(
+                "filled_amount", Decimal("0")
+            )
         return v
 
 
 class Position(BaseHyblockModel):
     """
     Información de una posición de trading.
-    
+
     Attributes:
         id: Identificador único de la posición
         symbol: Par de trading
@@ -183,14 +194,15 @@ class Position(BaseHyblockModel):
         created_at: Fecha de creación
         updated_at: Fecha de última actualización
     """
+
     id: str
     symbol: str
     side: PositionSide
     size: Decimal = Field(ge=0)
     entry_price: Decimal = Field(gt=0)
     mark_price: Decimal = Field(gt=0)
-    unrealized_pnl: Decimal = Field(default=Decimal('0'))
-    realized_pnl: Decimal = Field(default=Decimal('0'))
+    unrealized_pnl: Decimal = Field(default=Decimal("0"))
+    realized_pnl: Decimal = Field(default=Decimal("0"))
     margin: Decimal = Field(ge=0)
     leverage: Decimal = Field(gt=0, le=100)
     liquidation_price: Optional[Decimal] = Field(gt=0, default=None)
@@ -201,7 +213,7 @@ class Position(BaseHyblockModel):
 class Trade(BaseHyblockModel):
     """
     Información de una operación ejecutada.
-    
+
     Attributes:
         id: Identificador único del trade
         order_id: ID de la orden que generó el trade
@@ -214,6 +226,7 @@ class Trade(BaseHyblockModel):
         is_maker: Si fue una operación maker
         timestamp: Momento de ejecución
     """
+
     id: str
     order_id: str
     symbol: str
@@ -229,7 +242,7 @@ class Trade(BaseHyblockModel):
 class Ticker(BaseHyblockModel):
     """
     Información de ticker de un símbolo.
-    
+
     Attributes:
         symbol: Par de trading
         last_price: Último precio
@@ -242,6 +255,7 @@ class Ticker(BaseHyblockModel):
         price_change_percent_24h: Cambio porcentual en 24h
         timestamp: Momento de la información
     """
+
     symbol: str
     last_price: Decimal = Field(gt=0)
     bid_price: Decimal = Field(gt=0)
@@ -256,6 +270,7 @@ class Ticker(BaseHyblockModel):
 
 class OrderBookEntry(BaseHyblockModel):
     """Entrada en el libro de órdenes."""
+
     price: Decimal = Field(gt=0)
     amount: Decimal = Field(gt=0)
 
@@ -263,13 +278,14 @@ class OrderBookEntry(BaseHyblockModel):
 class OrderBook(BaseHyblockModel):
     """
     Libro de órdenes de un símbolo.
-    
+
     Attributes:
         symbol: Par de trading
         bids: Lista de órdenes de compra (precio, cantidad)
         asks: Lista de órdenes de venta (precio, cantidad)
         timestamp: Momento de la información
     """
+
     symbol: str
     bids: List[OrderBookEntry]
     asks: List[OrderBookEntry]
@@ -279,7 +295,7 @@ class OrderBook(BaseHyblockModel):
 class Candle(BaseHyblockModel):
     """
     Vela de precio para análisis técnico.
-    
+
     Attributes:
         symbol: Par de trading
         interval: Intervalo de tiempo (1m, 5m, 1h, etc)
@@ -292,6 +308,7 @@ class Candle(BaseHyblockModel):
         volume: Volumen operado
         trades_count: Número de operaciones
     """
+
     symbol: str
     interval: str
     open_time: datetime
@@ -307,7 +324,7 @@ class Candle(BaseHyblockModel):
 class MarketInfo(BaseHyblockModel):
     """
     Información de un mercado/símbolo.
-    
+
     Attributes:
         symbol: Par de trading
         base_asset: Activo base
@@ -320,6 +337,7 @@ class MarketInfo(BaseHyblockModel):
         maker_fee: Comisión maker
         taker_fee: Comisión taker
     """
+
     symbol: str
     base_asset: str
     quote_asset: str
