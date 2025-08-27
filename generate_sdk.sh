@@ -121,14 +121,10 @@ for f in "${GEN_FILES[@]}"; do
   fi
 done
 
-# No sobrescribir __init__.py si ya existe uno personalizado
-if [ -f "$FINAL_DIR/__init__.py" ]; then
-  echo -e "${YELLOW}  Preservando __init__.py existente (personalizado)${NC}"
-else
-  if [ -f "$GEN_DIR/__init__.py" ]; then
-    cp -f "$GEN_DIR/__init__.py" "$FINAL_DIR/__init__.py"
-    echo -e "${GREEN}  __init__.py generado copiado${NC}"
-  fi
+# Reemplazar siempre __init__.py con el generado para mantener exports consistentes
+if [ -f "$GEN_DIR/__init__.py" ]; then
+  cp -f "$GEN_DIR/__init__.py" "$FINAL_DIR/__init__.py"
+  echo -e "${GREEN}  __init__.py generado copiado${NC}"
 fi
 
 # Paso 5: Copiar archivos de configuración útiles si se generaron
