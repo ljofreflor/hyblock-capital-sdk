@@ -158,14 +158,7 @@ else
     exit 1
 fi
 
-# Ejecutar linting básico si está configurado
-if poetry run which black > /dev/null 2>&1; then
-    echo -e "${BLUE}Aplicando formato con Black...${NC}"
-    poetry run black "$FINAL_DIR" --diff --check || {
-        echo -e "${YELLOW}Aplicando formateo automático...${NC}"
-        poetry run black "$FINAL_DIR"
-    }
-fi
+# Nota: No se aplica formateo automático al código generado para preservar la salida del generador
 
 echo -e "${GREEN}SDK generado exitosamente!${NC}"
 echo -e "${BLUE}Ubicación del SDK: $FINAL_DIR${NC}"

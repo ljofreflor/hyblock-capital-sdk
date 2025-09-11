@@ -84,22 +84,22 @@ test-integration: ## Ejecutar tests de integración
 	$(PYTEST) $(TESTS_DIR)/integration -v
 
 # Linting y formato
-lint: ## Ejecutar análisis de código
+lint: ## Ejecutar análisis de código (excluye código generado)
 	@echo " Ejecutando análisis de código..."
-	$(FLAKE8) $(SDK_DIR) $(TESTS_DIR)
+	$(FLAKE8) --exclude $(SDK_DIR)/api,$(SDK_DIR)/models $(SDK_DIR) $(TESTS_DIR)
 	$(MYPY) $(SDK_DIR)
 
-format: ## Formatear código con Black
+format: ## Formatear código con Black (sin tocar lo generado)
 	@echo " Formateando código..."
-	$(BLACK) $(SDK_DIR) $(TESTS_DIR)
+	$(BLACK) --exclude 'hyblock_capital_sdk/(api|models)/' $(SDK_DIR) $(TESTS_DIR)
 
-format-check: ## Verificar formato sin aplicar cambios
+format-check: ## Verificar formato sin aplicar cambios (sin tocar lo generado)
 	@echo " Verificando formato..."
-	$(BLACK) --check $(SDK_DIR) $(TESTS_DIR)
+	$(BLACK) --exclude 'hyblock_capital_sdk/(api|models)/' --check $(SDK_DIR) $(TESTS_DIR)
 
-isort: ## Ordenar imports
+isort: ## Ordenar imports (excluye código generado)
 	@echo "📑 Ordenando imports..."
-	poetry run isort $(SDK_DIR) $(TESTS_DIR)
+	poetry run isort --skip-glob 'hyblock_capital_sdk/api/*' --skip-glob 'hyblock_capital_sdk/models/*' $(SDK_DIR) $(TESTS_DIR)
 
 # Verificaciones completas
 check: format-check lint test ## Ejecutar todas las verificaciones

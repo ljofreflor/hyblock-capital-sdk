@@ -5,8 +5,8 @@
 
 set -e
 
-echo "🚀 CONFIGURACIÓN COMPLETA: GITHUB + PyPI"
-echo "========================================"
+echo "CONFIGURACIÓN COMPLETA: GITHUB + PyPI"
+echo "====================================="
 echo
 
 # Función para verificar si el comando existe
