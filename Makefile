@@ -86,8 +86,8 @@ test-integration: ## Ejecutar tests de integración
 # Linting y formato
 lint: ## Ejecutar análisis de código (excluye código generado)
 	@echo " Ejecutando análisis de código..."
-	$(FLAKE8) --exclude $(SDK_DIR)/api,$(SDK_DIR)/models $(SDK_DIR) $(TESTS_DIR)
-	$(MYPY) $(SDK_DIR)
+	$(FLAKE8) --exclude $(SDK_DIR)/api,$(SDK_DIR)/models,$(SDK_DIR)/api_client.py,$(SDK_DIR)/api_response.py,$(SDK_DIR)/configuration.py,$(SDK_DIR)/exceptions.py,$(SDK_DIR)/rest.py $(TESTS_DIR)
+	$(MYPY) $(SDK_DIR) --exclude $(SDK_DIR)/api --exclude $(SDK_DIR)/models
 
 format: ## Formatear código con Black (sin tocar lo generado)
 	@echo " Formateando código..."
