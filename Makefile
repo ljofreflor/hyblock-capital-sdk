@@ -106,14 +106,21 @@ check: format-check lint test ## Ejecutar todas las verificaciones
 	@echo " Todas las verificaciones pasaron"
 
 # Documentación
-docs: ## Generar documentación
-	@echo " Generando documentación..."
-	@mkdir -p $(DOCS_DIR)
-	poetry run sphinx-build -b html $(DOCS_DIR) $(DOCS_DIR)/_build
+docs: ## Generar documentación con MkDocs
+	@echo "📚 Generando documentación..."
+	poetry run mkdocs build
 
 docs-serve: ## Servir documentación localmente
-	@echo " Sirviendo documentación en http://localhost:8000"
-	$(PYTHON) -m http.server 8000 -d $(DOCS_DIR)/_build
+	@echo "🌐 Sirviendo documentación en http://localhost:8000"
+	poetry run mkdocs serve
+
+docs-deploy: ## Desplegar documentación a GitHub Pages
+	@echo "🚀 Desplegando documentación..."
+	poetry run mkdocs gh-deploy
+
+docs-clean: ## Limpiar documentación generada
+	@echo "🧹 Limpiando documentación..."
+	rm -rf site/
 
 # Build y publicación
 build: clean ## Construir paquete para distribución

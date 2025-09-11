@@ -196,6 +196,6 @@ poetry run pytest tests/ -v
 
 **Ventajas del Nuevo Flujo:**
 - ⚡ CI/CD más rápido (no descarga externa)
-- 🔒 Más confiable (no depende de API externa)
-- 🎯 Control total sobre cuándo regenerar
-- 🔍 Fácil review de cambios en el SDK
+- Más confiable (no depende de API externa)
+- Control total sobre cuándo regenerar
+- Fácil review de cambios en el SDK
