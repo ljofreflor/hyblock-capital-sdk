@@ -1,0 +1,24 @@
+name: Branch Policy
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  main-from-develop-only:
+    name: Enforce PRs to main only from develop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate source branch
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          echo "Base: $BASE_REF | Head: $HEAD_REF"
+          if [ "$BASE_REF" = "main" ] && [ "$HEAD_REF" != "develop" ]; then
+            echo "❌ Solo se permiten PRs a main desde la rama 'develop'."
+            exit 1
+          fi
+          echo "✅ Regla de ramas cumplida"
+
+
