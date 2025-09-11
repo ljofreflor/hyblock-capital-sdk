@@ -17,6 +17,7 @@ SDK no oficial de Python para la API de Hyblock Capital, generado automáticamen
 - **Manejo de errores**: Excepciones personalizadas para diferentes tipos de errores de la API
 - **Documentación integrada**: Documentación generada automáticamente con ejemplos
 - **Testing incluido**: Suite de tests para validar la funcionalidad
+- **Poetry compatible**: Gestión de dependencias moderna y reproducible
 
 ## Instalación
 
@@ -26,10 +27,21 @@ SDK no oficial de Python para la API de Hyblock Capital, generado automáticamen
 pip install hyblock-capital-sdk
 ```
 
-### Desde el repositorio con Poetry
+### Con Poetry (Recomendado)
 
+**Opción 1: Desde PyPI**
+```bash
+poetry add hyblock-capital-sdk
+```
+
+**Opción 2: Desde el repositorio**
 ```bash
 poetry add git+https://github.com/ljofreflor/hyblock-capital-sdk.git
+```
+
+**Opción 3: Para desarrollo**
+```bash
+poetry add git+https://github.com/ljofreflor/hyblock-capital-sdk.git --editable
 ```
 
 ### Desarrollo local
@@ -283,17 +295,43 @@ except ApiException as e:
 
 ```bash
 # Configurar entorno de desarrollo
-git clone https://github.com/hyblock-capital/hyblock-capital-sdk.git
+git clone https://github.com/ljofreflor/hyblock-capital-sdk.git
 cd hyblock-capital-sdk
+
+# Configurar Python (recomendado usar pyenv)
+pyenv local 3.11.12
+
+# Instalar dependencias de desarrollo
 poetry install --with dev
 
 # Instalar pre-commit hooks
 poetry run pre-commit install
 
-# Ejecutar linting
-poetry run black hyblock_capital_sdk/
-poetry run flake8 hyblock_capital_sdk/
-poetry run mypy hyblock_capital_sdk/
+# Ejecutar verificaciones
+poetry run black tests/  # Formatear código
+poetry run flake8 tests/ # Linting
+poetry run mypy hyblock_capital_sdk/ --exclude hyblock_capital_sdk/api --exclude hyblock_capital_sdk/models
+poetry run pytest  # Tests
+```
+
+### Comandos útiles con Poetry
+
+```bash
+# Generar SDK desde OpenAPI
+poetry run ./generate_sdk.sh
+
+# Ejecutar tests con coverage
+poetry run pytest --cov=hyblock_capital_sdk
+
+# Build del paquete
+poetry build
+
+# Publicar en PyPI Test
+poetry publish --repository testpypi
+
+# Ver información del proyecto
+poetry show
+poetry check
 ```
 
 ## Licencias y Atribuciones
