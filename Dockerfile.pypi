@@ -19,30 +19,15 @@ RUN poetry config virtualenvs.create false
 # Create a new Poetry project to test installation
 RUN poetry init --name test-hyblock-sdk --version 0.1.0 --description "Test installation from PyPI" --author "Test User <test@example.com>" --no-interaction
 
-# Note: The package is not yet published to PyPI, so we'll simulate the installation
-# Once published, you would use: poetry add hyblock-capital-sdk
-# For now, we'll install from the local source to demonstrate the workflow
-
-# Copy the local package files to simulate PyPI installation
-COPY . /tmp/hyblock-capital-sdk/
-
-# Build and install the package from local source (simulating PyPI installation)
-RUN cd /tmp/hyblock-capital-sdk && pip install .
-
-# Alternative: If the package were published to PyPI, you would use:
-# RUN poetry add hyblock-capital-sdk
-
-# Debug: Check what's installed
-RUN pip list
-RUN python -c "import sys; print('Python path:', sys.path)"
-RUN python -c "import pydantic; print('Pydantic version:', pydantic.__version__)"
+# Install the library from PyPI using Poetry
+# This will work once the package is published to PyPI
+RUN poetry add hyblock-capital-sdk
 
 # Test the installation by importing the library
-ENV PYTHONPATH=/app
-RUN python -c "import hyblock_capital_sdk; print('Library imported successfully!')"
+RUN python -c "import hyblock_capital_sdk; print('Library imported successfully from PyPI!')"
 
 # Test basic functionality
 RUN python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('Core components imported successfully!'); print('Available API classes:', [attr for attr in dir(__import__('hyblock_capital_sdk')) if attr.endswith('Api')]); config = Configuration(); client = ApiClient(config); print('API client created successfully!')"
 
 # Keep container running for interactive testing
-CMD ["python", "-c", "print('Hyblock Capital SDK Docker test container is ready!'); import time; time.sleep(3600)"]
+CMD ["python", "-c", "print('Hyblock Capital SDK PyPI test container is ready!'); import time; time.sleep(3600)"]
