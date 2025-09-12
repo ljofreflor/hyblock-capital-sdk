@@ -264,12 +264,13 @@ clean-dist: ## Limpiar archivos de distribución
 
 check-dist: build-dist ## Verificar la distribución antes de subir
 	@echo " Verificando distribución..."
-	@echo " Verificación completada (usando poetry build)"
+	poetry run twine check dist/*
+	@echo " Verificación completada"
 
 upload-test: build-dist ## Subir a PyPI Test
 	@echo " Subiendo a PyPI Test (testpypi)..."
 	@echo "⚠️  Necesitarás tu token de PyPI Test"
-	poetry publish --repository testpypi
+	poetry run twine upload --repository testpypi dist/*
 	@echo " Paquete subido a PyPI Test"
 	@echo " Instalar desde test: pip install --index-url https://test.pypi.org/simple/ hyblock-capital-sdk"
 
@@ -279,7 +280,7 @@ upload-pypi: build-dist ## Subir a PyPI oficial
 	@read -p "¿Estás seguro? (y/N): " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
 		echo " Subiendo a PyPI oficial..."; \
-		poetry publish; \
+		poetry run twine upload dist/*; \
 		echo " Paquete publicado en PyPI"; \
 		echo " Instalar: pip install hyblock-capital-sdk"; \
 	else \
