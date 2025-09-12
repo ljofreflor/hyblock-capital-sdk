@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  hyblock-sdk-test:
+    build: .
+    container_name: hyblock-sdk-test
+    environment:
+      - PYTHONPATH=/app

@@ -279,8 +279,18 @@ jobs:
       env:
         POETRY_PYPI_TOKEN_TESTPYPI: ${{ secrets.TEST_PYPI_TOKEN }}
       run: |
+        echo "🚀 Publicando en TestPyPI..."
         poetry config repositories.testpypi https://test.pypi.org/legacy/
-        poetry publish --repository testpypi
+        poetry publish --repository testpypi --verbose
+        echo "✅ Publicación exitosa en TestPyPI"
+    
+    - name: Verificar publicación en TestPyPI
+      run: |
+        echo "🔍 Verificando publicación en TestPyPI..."
+        sleep 30  # Esperar a que TestPyPI actualice
+        poetry run pip install --index-url https://test.pypi.org/simple/ hyblock-capital-sdk --no-cache-dir
+        poetry run python -c "import hyblock_capital_sdk; print('✅ SDK importado correctamente desde TestPyPI')"
+        echo "🎉 Verificación exitosa - SDK disponible en TestPyPI"
 
   publish:
     name: Publicar en PyPI
@@ -318,63 +328,83 @@ jobs:
       run: |
         poetry build
     
+    - name: Verificar versión no existe en PyPI
+      run: |
+        VERSION=$(poetry version -s)
+        echo "🔍 Verificando si la versión $VERSION ya existe en PyPI..."
+        if poetry run pip index versions hyblock-capital-sdk | grep -q "$VERSION"; then
+          echo "❌ La versión $VERSION ya existe en PyPI"
+          exit 1
+        fi
+        echo "✅ Versión $VERSION disponible para publicación"
+    
     - name: Publicar en PyPI
       env:
         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
       run: |
-        poetry publish
+        echo "🚀 Publicando en PyPI..."
+        poetry publish --verbose
+        echo "✅ Publicación exitosa en PyPI"
+    
+    - name: Verificar publicación
+      run: |
+        echo "🔍 Verificando publicación en PyPI..."
+        sleep 30  # Esperar a que PyPI actualice
+        poetry run pip install hyblock-capital-sdk --no-cache-dir
+        poetry run python -c "import hyblock_capital_sdk; print('✅ SDK importado correctamente desde PyPI')"
+        echo "🎉 Verificación exitosa - SDK disponible en PyPI"
 
-  documentation:
-    name: Generar y Desplegar Documentación
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    
-    steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Necesario para gh-pages
-    
-    - name: Configurar Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    
-    - name: Instalar Poetry
-      uses: snok/install-poetry@v1
-      with:
-        version: ${{ env.POETRY_VERSION }}
-    
-    - name: Instalar dependencias
-      run: |
-        poetry install --with dev
-    
-    - name: Verificar SDK está presente
-      run: |
-        if [ ! -d "hyblock_capital_sdk" ] || [ ! -f "hyblock_capital_sdk/__init__.py" ]; then
-          echo "❌ SDK no encontrado en el repositorio"
-          exit 1
-        fi
-        echo "✅ SDK verificado"
-    
-    - name: Generar documentación
-      run: |
-        echo "📚 Generando documentación con MkDocs..."
-        poetry run mkdocs build
-        echo "✅ Documentación generada en site/"
-    
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-    
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./site
-    
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+  # documentation:
+  #   name: Generar y Desplegar Documentación
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   permissions:
+  #     contents: read
+  #     pages: write
+  #     id-token: write
+  #   
+  #   steps:
+  #   - name: Checkout código
+  #     uses: actions/checkout@v4
+  #     with:
+  #       fetch-depth: 0  # Necesario para gh-pages
+  #   
+  #   - name: Configurar Python
+  #     uses: actions/setup-python@v5
+  #     with:
+  #       python-version: ${{ env.PYTHON_VERSION }}
+  #   
+  #   - name: Instalar Poetry
+  #     uses: snok/install-poetry@v1
+  #     with:
+  #       version: ${{ env.POETRY_VERSION }}
+  #   
+  #   - name: Instalar dependencias
+  #     run: |
+  #       poetry install --with dev
+  #   
+  #   - name: Verificar SDK está presente
+  #     run: |
+  #       if [ ! -d "hyblock_capital_sdk" ] || [ ! -f "hyblock_capital_sdk/__init__.py" ]; then
+  #         echo "❌ SDK no encontrado en el repositorio"
+  #         exit 1
+  #       fi
+  #       echo "✅ SDK verificado"
+  #   
+  #   - name: Generar documentación
+  #     run: |
+  #       echo "📚 Generando documentación con MkDocs..."
+  #       poetry run mkdocs build
+  #       echo "✅ Documentación generada en site/"
+  #   
+  #   - name: Setup Pages
+  #     uses: actions/configure-pages@v4
+  #   
+  #   - name: Upload artifact
+  #     uses: actions/upload-pages-artifact@v3
+  #     with:
+  #       path: ./site
+  #   
+  #   - name: Deploy to GitHub Pages
+  #     id: deployment
+  #     uses: actions/deploy-pages@v4
