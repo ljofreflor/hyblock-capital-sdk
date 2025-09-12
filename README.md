@@ -217,6 +217,114 @@ except Exception as e:
     print(f"Error: {e}")
 ```
 
+#### Analizar pools de liquidez
+
+```python
+from hyblock_capital_sdk.api import LiquidityApi
+
+# Inicializar API de liquidez
+liquidity_api = LiquidityApi(api_client)
+
+try:
+    # 1. Obtener niveles acumulativos de liquidación
+    cumulative_pools = liquidity_api.cumulative_liq_level_get(
+        coin="BTC",
+        timeframe="1h",
+        exchange="binance",
+        sort="desc",
+        limit=20
+    )
+    
+    print("Pools de liquidación acumulativos:")
+    for pool in cumulative_pools:
+        print(f"  Precio: ${pool.price} | Cantidad: {pool.amount} BTC")
+    
+    # 2. Conteo de liquidaciones Long ancladas
+    long_liquidations = liquidity_api.anchored_liq_levels_count_get(
+        coin="BTC",
+        timeframe="1h",
+        level="long",
+        anchor="1d",
+        exchange="binance",
+        limit=10
+    )
+    
+    print(f"\nLiquidaciones Long detectadas: {len(long_liquidations)}")
+    
+    # 3. Tamaño de pools de liquidez
+    pool_sizes = liquidity_api.anchored_liq_levels_size_get(
+        coin="BTC",
+        timeframe="1h",
+        level="long",
+        anchor="4h",
+        exchange="binance",
+        limit=10
+    )
+    
+    print(f"Tamaños de pools analizados: {len(pool_sizes)}")
+    
+    # 4. Heatmap de liquidaciones
+    heatmap = liquidity_api.liquidation_heatmap_get(
+        coin="BTC",
+        timeframe="1h",
+        exchange="binance",
+        limit=50
+    )
+    
+    print(f"Heatmap de liquidaciones: {len(heatmap)} puntos")
+    
+    # 5. Eventos históricos de liquidación
+    import time
+    end_time = int(time.time())
+    start_time = end_time - (24 * 60 * 60)  # Últimas 24 horas
+    
+    historical_events = liquidity_api.liquidation_get(
+        coin="BTC",
+        timeframe="1h",
+        bucket="4,5,6",  # Liquidaciones grandes: 10k-100k, 100k-1m, 1m-10m
+        exchange="binance",
+        start_time=start_time,
+        end_time=end_time,
+        limit=20
+    )
+    
+    print(f"Eventos históricos (24h): {len(historical_events)}")
+    
+except Exception as e:
+    print(f"Error analizando pools: {e}")
+```
+
+#### Análisis avanzado de liquidaciones
+
+```python
+# Configuración para múltiples exchanges
+exchanges = ["binance", "bybit", "okx"]
+coins = ["BTC", "ETH", "SOL"]
+
+for coin in coins:
+    print(f"\n🔍 Analizando {coin} en múltiples exchanges...")
+    
+    for exchange in exchanges:
+        try:
+            # Obtener niveles de liquidación
+            levels = liquidity_api.liquidation_levels_get(
+                coin=coin,
+                timeframe="4h",
+                exchange=exchange,
+                limit=15
+            )
+            
+            print(f"  {exchange}: {len(levels)} niveles de liquidación")
+            
+            # Analizar el pool más grande
+            if levels:
+                largest_pool = max(levels, key=lambda x: x.amount)
+                print(f"    Pool más grande: ${largest_pool.price} ({largest_pool.amount} {coin})")
+                
+        except Exception as e:
+            print(f"  {exchange}: Error - {e}")
+```
+
 ## Regenerar SDK
 
 Para actualizar el SDK con los últimos cambios de la API:
@@ -251,6 +359,54 @@ poetry run pytest tests/test_account_api.py
 - [Documentación del SDK](./docs/)
 - [Ejemplos](./examples/)
 - [Referencia de modelos](./docs/models.md)
+
+## Análisis de Pools de Liquidez
+
+El SDK proporciona acceso completo a los datos de pools de liquidez de Hyblock Capital, permitiendo análisis avanzados de riesgo de liquidación.
+
+### Tipos de análisis disponibles
+
+#### 1. **Pools Acumulativos** (`cumulative_liq_level_get`)
+- Muestra la distribución acumulada de liquidaciones
+- Útil para identificar zonas de alta concentración de liquidez
+- Parámetros: `coin`, `timeframe`, `exchange`, `sort`, `limit`
+
+#### 2. **Conteo de Liquidaciones Ancladas** (`anchored_liq_levels_count_get`)
+- Cuenta liquidaciones por nivel (long/short) en un período específico
+- Ayuda a identificar patrones de liquidación recurrentes
+- Parámetros: `coin`, `timeframe`, `level`, `anchor`, `exchange`, `limit`
+
+#### 3. **Tamaño de Pools** (`anchored_liq_levels_size_get`)
+- Analiza el volumen de liquidez en cada nivel de precio
+- Identifica los pools más grandes que pueden causar movimientos significativos
+- Parámetros: `coin`, `timeframe`, `level`, `anchor`, `exchange`, `limit`
+
+#### 4. **Heatmap de Liquidaciones** (`liquidation_heatmap_get`)
+- Visualización de la densidad de liquidaciones por precio y tiempo
+- Útil para identificar clusters de riesgo
+- Parámetros: `coin`, `timeframe`, `exchange`, `limit`
+
+#### 5. **Eventos Históricos** (`liquidation_get`)
+- Liquidaciones específicas que han ocurrido en el pasado
+- Permite análisis de correlación y patrones temporales
+- Parámetros: `coin`, `timeframe`, `bucket`, `exchange`, `start_time`, `end_time`, `limit`
+
+### Parámetros comunes
+
+- **coin**: Símbolo de la criptomoneda (BTC, ETH, SOL, etc.)
+- **timeframe**: Período de tiempo (1h, 4h, 1d, 1w)
+- **exchange**: Exchange (binance, bybit, okx, etc.)
+- **level**: Tipo de liquidación (long, short)
+- **anchor**: Período de anclaje (1h, 4h, 1d, 1w)
+- **bucket**: Rangos de tamaño (1-10k, 4-100k, 5-1m, 6-10m, etc.)
+
+### Casos de uso
+
+1. **Identificación de soporte/resistencia**: Los pools grandes pueden actuar como niveles clave
+2. **Análisis de riesgo**: Concentraciones altas indican mayor riesgo de liquidación
+3. **Estrategias de trading**: Evitar áreas con alta probabilidad de liquidación
+4. **Alertas automáticas**: Monitoreo de pools que se acercan a niveles críticos
+5. **Backtesting**: Análisis histórico de correlación entre liquidaciones y movimientos de precio
 
 ## Manejo de errores
 

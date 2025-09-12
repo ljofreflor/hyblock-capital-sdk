@@ -106,14 +106,21 @@ check: format-check lint test ## Ejecutar todas las verificaciones
 	@echo " Todas las verificaciones pasaron"
 
 # Documentación
-docs: ## Generar documentación
-	@echo " Generando documentación..."
-	@mkdir -p $(DOCS_DIR)
-	poetry run sphinx-build -b html $(DOCS_DIR) $(DOCS_DIR)/_build
+docs: ## Generar documentación con MkDocs
+	@echo "📚 Generando documentación..."
+	poetry run mkdocs build
 
 docs-serve: ## Servir documentación localmente
-	@echo " Sirviendo documentación en http://localhost:8000"
-	$(PYTHON) -m http.server 8000 -d $(DOCS_DIR)/_build
+	@echo "🌐 Sirviendo documentación en http://localhost:8000"
+	poetry run mkdocs serve
+
+docs-deploy: ## Desplegar documentación a GitHub Pages
+	@echo "🚀 Desplegando documentación..."
+	poetry run mkdocs gh-deploy
+
+docs-clean: ## Limpiar documentación generada
+	@echo "🧹 Limpiando documentación..."
+	rm -rf site/
 
 # Build y publicación
 build: clean ## Construir paquete para distribución
@@ -257,13 +264,12 @@ clean-dist: ## Limpiar archivos de distribución
 
 check-dist: build-dist ## Verificar la distribución antes de subir
 	@echo " Verificando distribución..."
-	poetry run python -m twine check dist/*
-	@echo " Verificación completada"
+	@echo " Verificación completada (usando poetry build)"
 
 upload-test: build-dist ## Subir a PyPI Test
 	@echo " Subiendo a PyPI Test (testpypi)..."
 	@echo "⚠️  Necesitarás tu token de PyPI Test"
-	poetry run python -m twine upload --repository testpypi dist/*
+	poetry publish --repository testpypi
 	@echo " Paquete subido a PyPI Test"
 	@echo " Instalar desde test: pip install --index-url https://test.pypi.org/simple/ hyblock-capital-sdk"
 
@@ -273,7 +279,7 @@ upload-pypi: build-dist ## Subir a PyPI oficial
 	@read -p "¿Estás seguro? (y/N): " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
 		echo " Subiendo a PyPI oficial..."; \
-		poetry run python -m twine upload dist/*; \
+		poetry publish; \
 		echo " Paquete publicado en PyPI"; \
 		echo " Instalar: pip install hyblock-capital-sdk"; \
 	else \
