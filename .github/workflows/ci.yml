@@ -328,10 +328,16 @@ jobs:
     name: Generar y Desplegar Documentación
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     
     steps:
     - name: Checkout código
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Necesario para gh-pages
     
     - name: Configurar Python
       uses: actions/setup-python@v5
@@ -357,12 +363,18 @@ jobs:
     
     - name: Generar documentación
       run: |
-        # TODO: Configurar generación de documentación
-        echo "Documentación generada"
+        echo "📚 Generando documentación con MkDocs..."
+        poetry run mkdocs build
+        echo "✅ Documentación generada en site/"
     
-    - name: Desplegar en GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      if: github.ref == 'refs/heads/main'
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+    
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/_build
+        path: ./site
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
