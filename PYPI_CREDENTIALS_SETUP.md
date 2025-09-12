@@ -18,11 +18,11 @@ Haz clic en **New repository secret** y crea los siguientes secrets:
 
 #### **Para PyPI (Producción):**
 - **Name**: `PYPI_TOKEN`
-- **Value**: `pypi-AgEIcHlwaS5vcmcCJGYyYjQ5YjQ5LWI5YjQtNDQ4YS1hYjQ5LWI5YjQ5YjQ5YjQ5YjQ5`
+- **Value**: `[TU_TOKEN_REAL_DE_PYPI]` (formato: `pypi-...`)
 
 #### **Para TestPyPI (Testing):**
 - **Name**: `TEST_PYPI_TOKEN`
-- **Value**: `pypi-AgEIcHlwaS5vcmcCJGYyYjQ5YjQ5LWI5YjQtNDQ4YS1hYjQ5LWI5YjQ5YjQ5YjQ5YjQ5`
+- **Value**: `[TU_TOKEN_REAL_DE_TESTPYPI]` (formato: `pypi-...`)
 
 ## 🔑 **Cómo obtener los tokens de PyPI**
 
@@ -33,7 +33,7 @@ Haz clic en **New repository secret** y crea los siguientes secrets:
 3. Haz clic en **Add API token**
 4. **Token name**: `hyblock-capital-sdk-ci`
 5. **Scope**: `Entire account (all projects)` o `Specific project: hyblock-capital-sdk`
-6. Copia el token generado (formato: `pypi-...`)
+6. **Copia el token generado** (formato: `pypi-...`) - **NO lo compartas**
 
 ### **Para TestPyPI (Testing):**
 
@@ -42,7 +42,7 @@ Haz clic en **New repository secret** y crea los siguientes secrets:
 3. Haz clic en **Add API token**
 4. **Token name**: `hyblock-capital-sdk-test-ci`
 5. **Scope**: `Entire account (all projects)` o `Specific project: hyblock-capital-sdk`
-6. Copia el token generado (formato: `pypi-...`)
+6. **Copia el token generado** (formato: `pypi-...`) - **NO lo compartas**
 
 ## 🔄 **Cómo funciona el CI/CD**
 
