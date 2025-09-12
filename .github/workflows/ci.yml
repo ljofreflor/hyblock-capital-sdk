@@ -279,8 +279,18 @@ jobs:
       env:
         POETRY_PYPI_TOKEN_TESTPYPI: ${{ secrets.TEST_PYPI_TOKEN }}
       run: |
+        echo "🚀 Publicando en TestPyPI..."
         poetry config repositories.testpypi https://test.pypi.org/legacy/
-        poetry publish --repository testpypi
+        poetry publish --repository testpypi --verbose
+        echo "✅ Publicación exitosa en TestPyPI"
+    
+    - name: Verificar publicación en TestPyPI
+      run: |
+        echo "🔍 Verificando publicación en TestPyPI..."
+        sleep 30  # Esperar a que TestPyPI actualice
+        poetry run pip install --index-url https://test.pypi.org/simple/ hyblock-capital-sdk --no-cache-dir
+        poetry run python -c "import hyblock_capital_sdk; print('✅ SDK importado correctamente desde TestPyPI')"
+        echo "🎉 Verificación exitosa - SDK disponible en TestPyPI"
 
   publish:
     name: Publicar en PyPI
@@ -318,11 +328,31 @@ jobs:
       run: |
         poetry build
     
+    - name: Verificar versión no existe en PyPI
+      run: |
+        VERSION=$(poetry version -s)
+        echo "🔍 Verificando si la versión $VERSION ya existe en PyPI..."
+        if poetry run pip index versions hyblock-capital-sdk | grep -q "$VERSION"; then
+          echo "❌ La versión $VERSION ya existe en PyPI"
+          exit 1
+        fi
+        echo "✅ Versión $VERSION disponible para publicación"
+    
     - name: Publicar en PyPI
       env:
         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
       run: |
-        poetry publish
+        echo "🚀 Publicando en PyPI..."
+        poetry publish --verbose
+        echo "✅ Publicación exitosa en PyPI"
+    
+    - name: Verificar publicación
+      run: |
+        echo "🔍 Verificando publicación en PyPI..."
+        sleep 30  # Esperar a que PyPI actualice
+        poetry run pip install hyblock-capital-sdk --no-cache-dir
+        poetry run python -c "import hyblock_capital_sdk; print('✅ SDK importado correctamente desde PyPI')"
+        echo "🎉 Verificación exitosa - SDK disponible en PyPI"
 
   # documentation:
   #   name: Generar y Desplegar Documentación
