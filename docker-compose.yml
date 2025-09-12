@@ -4,8 +4,5 @@ services:
   hyblock-sdk-test:
     build: .
     container_name: hyblock-sdk-test
-    volumes:
-      - ./test_installation.py:/app/test_installation.py
     environment:
       - PYTHONPATH=/app
-    command: python test_installation.py

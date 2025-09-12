@@ -1,25 +1,24 @@
 # Docker Testing for Hyblock Capital SDK
 
-This directory contains Docker configurations to test the installation and functionality of the Hyblock Capital SDK.
+This directory contains Docker configuration to test the installation and functionality of the Hyblock Capital SDK from PyPI.
 
 ## Overview
 
-We provide two different Docker setups:
+We provide a single Docker setup that tests the real installation from PyPI using Poetry:
 
-1. **Local Testing** (`Dockerfile` + `docker-compose.yml`) - Tests installation from local source
-2. **PyPI Testing** (`Dockerfile.pypi` + `docker-compose.pypi.yml`) - Tests installation from PyPI (once published)
+- **PyPI Testing** (`Dockerfile` + `docker-compose.yml`) - Tests installation from PyPI servers
 
-## Local Testing (Current)
+## PyPI Testing
 
 ### Files
-- `Dockerfile` - Tests installation from local source code
-- `docker-compose.yml` - Easy way to run the local test
+- `Dockerfile` - Tests installation from PyPI servers using Poetry
+- `docker-compose.yml` - Easy way to run the PyPI test
 - `test_installation.py` - Comprehensive test script
 
 ### Usage
 
 ```bash
-# Build and run the local test
+# Build and run the PyPI test
 docker-compose up --build
 
 # Or build manually
@@ -29,32 +28,10 @@ docker run --rm hyblock-sdk-test
 
 ### What it does
 - Creates a Poetry project
-- Installs the SDK from local source (simulating PyPI installation)
-- Tests all core functionality
-- Verifies all API classes are available
-
-## PyPI Testing (Future)
-
-### Files
-- `Dockerfile.pypi` - Tests installation from PyPI servers
-- `docker-compose.pypi.yml` - Easy way to run the PyPI test
-
-### Usage (Once package is published to PyPI)
-
-```bash
-# Build and run the PyPI test
-docker-compose -f docker-compose.pypi.yml up --build
-
-# Or build manually
-docker build -f Dockerfile.pypi -t hyblock-sdk-pypi-test .
-docker run --rm hyblock-sdk-pypi-test
-```
-
-### What it does
-- Creates a Poetry project
 - Installs the SDK directly from PyPI using `poetry add hyblock-capital-sdk`
 - Tests all core functionality
 - Verifies the package works as published
+- Shows clear success/failure feedback
 
 ## Test Results
 
