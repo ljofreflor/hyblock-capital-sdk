@@ -8,12 +8,14 @@
 - ✅ **No push directo** - Solo merge via PR
 - ✅ **Revisión requerida** - Al menos 1 aprobación
 - ✅ **No PRs en draft** - Solo PRs completos
+- 🚫 **No creación de ramas** - No se pueden crear ramas desde main
 
 ### **Rama `develop` (Desarrollo)**
 - 🚫 **No push directo** - Solo PRs desde feature/fix/hotfix
 - ✅ **Tests automáticos** - En cada PR
 - ✅ **Linting automático** - Verificación de código
 - ✅ **Solo PRs desde feature/*, fix/*, hotfix/***
+- ✅ **Base para nuevas ramas** - Todas las ramas deben crearse desde develop
 
 ### **Ramas `feature/*`, `fix/*`, `hotfix/*` (Desarrollo)**
 - ✅ **Push directo permitido** - Para desarrollo de features/fixes
@@ -34,11 +36,16 @@ El archivo `.github/workflows/branch-policy.yml` implementa:
    - Detecta push directo a `main` y `develop`
    - Falla el workflow y bloquea el push
 
-3. **Tests unitarios obligatorios**
+3. **Validación de creación de ramas**
+   - Bloquea creación de ramas desde `main`
+   - Solo permite ramas creadas desde `develop`
+   - Verifica ancestros de las ramas
+
+4. **Tests unitarios obligatorios**
    - Ejecuta `poetry run pytest tests/` en cada PR a `main` o `develop`
    - Falla si los tests no pasan
 
-4. **Validación de requisitos**
+5. **Validación de requisitos**
    - Verifica que el PR tenga descripción
    - Bloquea PRs en draft
 
@@ -48,7 +55,11 @@ El archivo `.github/workflows/branch-policy.yml` implementa:
 
 #### **1. Desarrollo en feature/fix:**
 ```bash
-# Crear feature branch
+# IMPORTANTE: Siempre crear ramas desde develop
+git checkout develop
+git pull origin develop
+
+# Crear feature branch desde develop
 git checkout -b feature/nueva-funcionalidad
 # O para fixes:
 git checkout -b fix/corregir-bug
@@ -129,9 +140,19 @@ poetry run pytest tests/ --cov=hyblock_capital_sdk
 ### **Error: "Push directo a main/develop no permitido"**
 ```bash
 # Solución: Usar PR desde feature/fix
+git checkout develop
 git checkout -b feature/tu-cambio
 git push origin feature/tu-cambio
 # Crear PR en GitHub desde feature/tu-cambio a develop
+```
+
+### **Error: "No se permiten ramas creadas desde main"**
+```bash
+# Solución: Crear rama desde develop
+git checkout develop
+git pull origin develop
+git checkout -b feature/tu-cambio
+git push origin feature/tu-cambio
 ```
 
 ### **Error: "Solo se permiten PRs a develop desde feature/*, fix/*, hotfix/*"**

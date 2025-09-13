@@ -5,12 +5,14 @@ on:
     branches: [ main, develop ]
   push:
     branches: [ main, develop ]
+  create:
+    ref_type: branch
 
 jobs:
   enforce-branch-policy:
     name: Enforce Branch Policy
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'create'
     
     steps:
       - name: Checkout code
@@ -100,5 +102,32 @@ jobs:
           fi
           
           echo "✅ PR cumple con los requisitos básicos"
+      
+      - name: Validate branch creation policy
+        if: github.event_name == 'create' && github.event.ref_type == 'branch'
+        env:
+          NEW_BRANCH: ${{ github.event.ref }}
+        run: |
+          echo "🔍 Validando política de creación de ramas..."
+          echo "Nueva rama: $NEW_BRANCH"
+          
+          # Verificar que no se creen ramas desde main
+          if [ "$NEW_BRANCH" != "main" ] && [ "$NEW_BRANCH" != "develop" ]; then
+            # Obtener información de la rama base
+            BASE_BRANCH=$(git show-ref --heads | grep "$NEW_BRANCH" | head -1 | cut -d' ' -f2 | sed 's|refs/heads/||')
+            
+            # Verificar si la rama se creó desde main
+            if git merge-base --is-ancestor main "$NEW_BRANCH" 2>/dev/null; then
+              if ! git merge-base --is-ancestor develop "$NEW_BRANCH" 2>/dev/null; then
+                echo "❌ [POLICY VIOLATION] No se permiten ramas creadas desde main."
+                echo "❌ Rama creada: $NEW_BRANCH"
+                echo "❌ Todas las ramas deben crearse desde develop."
+                echo "❌ Usa: git checkout develop && git checkout -b $NEW_BRANCH"
+                exit 1
+              fi
+            fi
+          fi
+          
+          echo "✅ [POLICY] Creación de rama cumple con las reglas"
 
 
