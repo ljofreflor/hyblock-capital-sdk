@@ -2,9 +2,9 @@ name: Branch Policy
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   enforce-branch-policy:
@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Validate PR to main only from develop
+      - name: Validate PR policies
         if: github.event_name == 'pull_request'
         env:
           HEAD_REF: ${{ github.head_ref }}
@@ -27,6 +27,7 @@ jobs:
           echo "🔍 Validando política de ramas..."
           echo "Base: $BASE_REF | Head: $HEAD_REF"
           
+          # Validar PR a main solo desde develop
           if [ "$BASE_REF" = "main" ] && [ "$HEAD_REF" != "develop" ]; then
             echo "❌ [POLICY VIOLATION] Solo se permiten PRs a main desde la rama 'develop'."
             echo "❌ Rama origen: $HEAD_REF (debe ser 'develop')"
@@ -34,18 +35,34 @@ jobs:
             exit 1
           fi
           
+          # Validar PR a develop solo desde feature/fix branches
+          if [ "$BASE_REF" = "develop" ]; then
+            if [[ "$HEAD_REF" != feature/* && "$HEAD_REF" != fix/* && "$HEAD_REF" != hotfix/* ]]; then
+              echo "❌ [POLICY VIOLATION] Solo se permiten PRs a develop desde ramas 'feature/*', 'fix/*' o 'hotfix/*'."
+              echo "❌ Rama origen: $HEAD_REF (debe ser feature/*, fix/* o hotfix/*)"
+              echo "❌ Rama destino: $BASE_REF"
+              exit 1
+            fi
+          fi
+          
           echo "✅ [POLICY] Regla de ramas cumplida - PR desde $HEAD_REF a $BASE_REF"
       
-      - name: Block direct push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Block direct push to protected branches
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
         run: |
-          echo "❌ [POLICY VIOLATION] Push directo a main no permitido."
-          echo "❌ Solo se permiten PRs desde develop que pasen los tests unitarios."
-          echo "❌ Usa: git push origin develop y crea un PR"
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "❌ [POLICY VIOLATION] Push directo a main no permitido."
+            echo "❌ Solo se permiten PRs desde develop que pasen los tests unitarios."
+            echo "❌ Usa: git push origin develop y crea un PR"
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            echo "❌ [POLICY VIOLATION] Push directo a develop no permitido."
+            echo "❌ Solo se permiten PRs desde ramas feature/*, fix/* o hotfix/*."
+            echo "❌ Usa: git push origin feature/tu-feature y crea un PR"
+          fi
           exit 1
       
       - name: Run unit tests for PR validation
-        if: github.event_name == 'pull_request' && github.base_ref == 'main'
+        if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'develop')
         run: |
           echo "🧪 Ejecutando tests unitarios para validar PR..."
           
@@ -65,7 +82,7 @@ jobs:
           echo "✅ Tests unitarios pasaron exitosamente"
       
       - name: Validate PR requirements
-        if: github.event_name == 'pull_request' && github.base_ref == 'main'
+        if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'develop')
         run: |
           echo "📋 Validando requisitos del PR..."
           
@@ -78,7 +95,7 @@ jobs:
           
           # Verificar que no sea un draft
           if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
-            echo "❌ [POLICY] No se permiten PRs en draft a main"
+            echo "❌ [POLICY] No se permiten PRs en draft a ramas protegidas"
             exit 1
           fi
           

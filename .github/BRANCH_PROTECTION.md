@@ -10,13 +10,15 @@
 - ✅ **No PRs en draft** - Solo PRs completos
 
 ### **Rama `develop` (Desarrollo)**
-- ✅ **Push directo permitido** - Para desarrollo activo
-- ✅ **Tests automáticos** - En cada push
+- 🚫 **No push directo** - Solo PRs desde feature/fix/hotfix
+- ✅ **Tests automáticos** - En cada PR
 - ✅ **Linting automático** - Verificación de código
+- ✅ **Solo PRs desde feature/*, fix/*, hotfix/***
 
-### **Ramas `feature/*` (Features)**
-- ✅ **Push directo permitido** - Para desarrollo de features
-- ✅ **Merge a `develop`** - Via PR con tests
+### **Ramas `feature/*`, `fix/*`, `hotfix/*` (Desarrollo)**
+- ✅ **Push directo permitido** - Para desarrollo de features/fixes
+- ✅ **Merge a `develop`** - Via PR con tests obligatorios
+- ✅ **Tests automáticos** - En cada PR a develop
 
 ## 🔧 Configuración Automática
 
@@ -25,14 +27,15 @@ El archivo `.github/workflows/branch-policy.yml` implementa:
 
 1. **Validación de origen de PR**
    - Solo permite PRs a `main` desde `develop`
+   - Solo permite PRs a `develop` desde `feature/*`, `fix/*`, `hotfix/*`
    - Bloquea PRs desde otras ramas
 
 2. **Bloqueo de push directo**
-   - Detecta push directo a `main`
+   - Detecta push directo a `main` y `develop`
    - Falla el workflow y bloquea el push
 
 3. **Tests unitarios obligatorios**
-   - Ejecuta `poetry run pytest tests/` en cada PR
+   - Ejecuta `poetry run pytest tests/` en cada PR a `main` o `develop`
    - Falla si los tests no pasan
 
 4. **Validación de requisitos**
@@ -43,23 +46,30 @@ El archivo `.github/workflows/branch-policy.yml` implementa:
 
 ### **Para Desarrolladores:**
 
-#### **1. Desarrollo en feature:**
+#### **1. Desarrollo en feature/fix:**
 ```bash
 # Crear feature branch
 git checkout -b feature/nueva-funcionalidad
+# O para fixes:
+git checkout -b fix/corregir-bug
 
 # Hacer cambios y commits
 git add .
 git commit -m "feat: agregar nueva funcionalidad"
+# O para fixes:
+git commit -m "fix: corregir bug en validación"
 
-# Push a feature branch
+# Push a feature/fix branch
 git push origin feature/nueva-funcionalidad
+# O:
+git push origin fix/corregir-bug
 ```
 
 #### **2. Merge a develop:**
 ```bash
-# Crear PR desde feature a develop
+# Crear PR desde feature/fix a develop
 # GitHub automáticamente ejecutará tests
+# Solo se permite desde feature/*, fix/*, hotfix/*
 # Merge cuando los tests pasen
 ```
 
@@ -67,7 +77,7 @@ git push origin feature/nueva-funcionalidad
 ```bash
 # Crear PR desde develop a main
 # Los tests unitarios se ejecutarán automáticamente
-# Solo se puede mergear si los tests pasan
+# Solo se puede mergear si los tests pasen
 ```
 
 ### **Para Administradores:**
@@ -116,12 +126,20 @@ poetry run pytest tests/ --cov=hyblock_capital_sdk
 
 ## 🚨 Troubleshooting
 
-### **Error: "Push directo a main no permitido"**
+### **Error: "Push directo a main/develop no permitido"**
 ```bash
-# Solución: Usar PR desde develop
-git checkout develop
-git push origin develop
-# Crear PR en GitHub desde develop a main
+# Solución: Usar PR desde feature/fix
+git checkout -b feature/tu-cambio
+git push origin feature/tu-cambio
+# Crear PR en GitHub desde feature/tu-cambio a develop
+```
+
+### **Error: "Solo se permiten PRs a develop desde feature/*, fix/*, hotfix/*"**
+```bash
+# Solución: Crear rama con nombre correcto
+git checkout -b feature/tu-cambio  # O fix/tu-fix
+git push origin feature/tu-cambio
+# Crear PR desde la rama correcta
 ```
 
 ### **Error: "Solo se permiten PRs a main desde develop"**
@@ -137,14 +155,14 @@ poetry run pytest tests/ -v
 # Hacer commit de fixes
 git add .
 git commit -m "fix: arreglar tests unitarios"
-git push origin develop
+git push origin feature/tu-cambio  # O fix/tu-fix
 ```
 
 ## 🔄 Flujo de Trabajo Completo
 
 ```mermaid
 graph TD
-    A[Feature Branch] --> B[Push to Feature]
+    A[Feature/Fix Branch] --> B[Push to Feature/Fix]
     B --> C[PR to Develop]
     C --> D[Tests Pass?]
     D -->|No| E[Fix Tests]
