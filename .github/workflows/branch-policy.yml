@@ -3,22 +3,85 @@ name: Branch Policy
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main ]
 
 jobs:
-  main-from-develop-only:
-    name: Enforce PRs to main only from develop
+  enforce-branch-policy:
+    name: Enforce Branch Policy
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    
     steps:
-      - name: Validate source branch
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Validate PR to main only from develop
+        if: github.event_name == 'pull_request'
         env:
           HEAD_REF: ${{ github.head_ref }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
+          echo "🔍 Validando política de ramas..."
           echo "Base: $BASE_REF | Head: $HEAD_REF"
+          
           if [ "$BASE_REF" = "main" ] && [ "$HEAD_REF" != "develop" ]; then
-            echo "❌ Solo se permiten PRs a main desde la rama 'develop'."
+            echo "❌ [POLICY VIOLATION] Solo se permiten PRs a main desde la rama 'develop'."
+            echo "❌ Rama origen: $HEAD_REF (debe ser 'develop')"
+            echo "❌ Rama destino: $BASE_REF"
             exit 1
           fi
-          echo "✅ Regla de ramas cumplida"
+          
+          echo "✅ [POLICY] Regla de ramas cumplida - PR desde $HEAD_REF a $BASE_REF"
+      
+      - name: Block direct push to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "❌ [POLICY VIOLATION] Push directo a main no permitido."
+          echo "❌ Solo se permiten PRs desde develop que pasen los tests unitarios."
+          echo "❌ Usa: git push origin develop y crea un PR"
+          exit 1
+      
+      - name: Run unit tests for PR validation
+        if: github.event_name == 'pull_request' && github.base_ref == 'main'
+        run: |
+          echo "🧪 Ejecutando tests unitarios para validar PR..."
+          
+          # Verificar que Python esté disponible
+          python --version || python3 --version
+          
+          # Verificar que Poetry esté disponible
+          poetry --version
+          
+          # Instalar dependencias
+          poetry install --with dev
+          
+          # Ejecutar tests unitarios
+          echo "🔍 Ejecutando tests unitarios..."
+          poetry run pytest tests/ -v --tb=short
+          
+          echo "✅ Tests unitarios pasaron exitosamente"
+      
+      - name: Validate PR requirements
+        if: github.event_name == 'pull_request' && github.base_ref == 'main'
+        run: |
+          echo "📋 Validando requisitos del PR..."
+          
+          # Verificar que el PR tenga descripción
+          if [ -z "${{ github.event.pull_request.body }}" ]; then
+            echo "⚠️  Advertencia: El PR no tiene descripción"
+          else
+            echo "✅ PR tiene descripción"
+          fi
+          
+          # Verificar que no sea un draft
+          if [ "${{ github.event.pull_request.draft }}" = "true" ]; then
+            echo "❌ [POLICY] No se permiten PRs en draft a main"
+            exit 1
+          fi
+          
+          echo "✅ PR cumple con los requisitos básicos"
 
 
