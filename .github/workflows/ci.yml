@@ -354,57 +354,57 @@ jobs:
         poetry run python -c "import hyblock_capital_sdk; print('✅ SDK importado correctamente desde PyPI')"
         echo "🎉 Verificación exitosa - SDK disponible en PyPI"
 
-  # documentation:
-  #   name: Generar y Desplegar Documentación
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-  #   permissions:
-  #     contents: read
-  #     pages: write
-  #     id-token: write
-  #   
-  #   steps:
-  #   - name: Checkout código
-  #     uses: actions/checkout@v4
-  #     with:
-  #       fetch-depth: 0  # Necesario para gh-pages
-  #   
-  #   - name: Configurar Python
-  #     uses: actions/setup-python@v5
-  #     with:
-  #       python-version: ${{ env.PYTHON_VERSION }}
-  #   
-  #   - name: Instalar Poetry
-  #     uses: snok/install-poetry@v1
-  #     with:
-  #       version: ${{ env.POETRY_VERSION }}
-  #   
-  #   - name: Instalar dependencias
-  #     run: |
-  #       poetry install --with dev
-  #   
-  #   - name: Verificar SDK está presente
-  #     run: |
-  #       if [ ! -d "hyblock_capital_sdk" ] || [ ! -f "hyblock_capital_sdk/__init__.py" ]; then
-  #         echo "❌ SDK no encontrado en el repositorio"
-  #         exit 1
-  #       fi
-  #       echo "✅ SDK verificado"
-  #   
-  #   - name: Generar documentación
-  #     run: |
-  #       echo "📚 Generando documentación con MkDocs..."
-  #       poetry run mkdocs build
-  #       echo "✅ Documentación generada en site/"
-  #   
-  #   - name: Setup Pages
-  #     uses: actions/configure-pages@v4
-  #   
-  #   - name: Upload artifact
-  #     uses: actions/upload-pages-artifact@v3
-  #     with:
-  #       path: ./site
-  #   
-  #   - name: Deploy to GitHub Pages
-  #     id: deployment
-  #     uses: actions/deploy-pages@v4
+  documentation:
+    name: Generar y Desplegar Documentación
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Necesario para gh-pages
+    
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Instalar Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: ${{ env.POETRY_VERSION }}
+    
+    - name: Instalar dependencias
+      run: |
+        poetry install --with dev
+    
+    - name: Verificar SDK está presente
+      run: |
+        if [ ! -d "hyblock_capital_sdk" ] || [ ! -f "hyblock_capital_sdk/__init__.py" ]; then
+          echo "❌ SDK no encontrado en el repositorio"
+          exit 1
+        fi
+        echo "✅ SDK verificado"
+    
+    - name: Generar documentación
+      run: |
+        echo "📚 Generando documentación con MkDocs..."
+        poetry run mkdocs build
+        echo "✅ Documentación generada en site/"
+    
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+    
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./site
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
