@@ -1,0 +1,144 @@
+name: Post-Publish PyPI Test
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggered by version tags
+
+jobs:
+  test-after-publish:
+    name: Test After Publish
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Wait for PyPI propagation
+      run: |
+        echo "⏳ Waiting for PyPI to propagate changes..."
+        sleep 60  # Esperar 1 minuto para que PyPI se actualice
+    
+    - name: Setup Poetry
+      run: |
+        echo "🐍 Installing Poetry..."
+        curl -sSL https://install.python-poetry.org | python3 -
+        export PATH="$HOME/.local/bin:$PATH"
+        poetry --version
+
+    - name: Test published version
+      run: |
+        echo "🔍 Testing published version..."
+        
+        # Obtener versión del tag
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "Testing version: $VERSION"
+        
+        # Crear entorno limpio en directorio temporal
+        mkdir -p /tmp/version-test
+        cd /tmp/version-test
+        
+        # Crear pyproject.toml manualmente
+        cat > pyproject.toml << EOF
+        [tool.poetry]
+        name = "test-version-installation"
+        version = "0.1.0"
+        description = "Test specific version installation from PyPI"
+        authors = ["Test User <test@example.com>"]
+        
+        [tool.poetry.dependencies]
+        python = "^3.9"
+        
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+        EOF
+        
+        # Instalar versión específica desde PyPI usando Poetry
+        export PATH="$HOME/.local/bin:$PATH"
+        poetry add hyblock-capital-sdk==$VERSION
+        
+        # Verificar instalación
+        poetry run python -c "import hyblock_capital_sdk; print('✅ Version $VERSION installed successfully')"
+        poetry run python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components working')"
+        
+        # Verificar que es la versión correcta
+        INSTALLED_VERSION=$(poetry show hyblock-capital-sdk | grep version | cut -d' ' -f4)
+        if [ "$INSTALLED_VERSION" = "$VERSION" ]; then
+          echo "✅ Correct version installed: $VERSION"
+        else
+          echo "❌ Version mismatch: expected $VERSION, got $INSTALLED_VERSION"
+          exit 1
+        fi
+        
+        # Limpiar directorio temporal
+        cd /
+        rm -rf /tmp/version-test
+    
+    - name: Test with Docker
+      run: |
+        echo "🐳 Testing with Docker..."
+        
+        VERSION=${GITHUB_REF#refs/tags/v}
+        
+        # Crear pyproject.toml temporal
+        cat > pyproject.toml.tmp << 'PYPROJ'
+        [tool.poetry]
+        name = "test-hyblock-sdk"
+        version = "0.1.0"
+        description = "Test installation from PyPI"
+        authors = ["Test User <test@example.com>"]
+        
+        [tool.poetry.dependencies]
+        python = "^3.9"
+        
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+        PYPROJ
+        
+        # Crear Dockerfile para versión específica
+        cat > Dockerfile.version-test << EOF
+        FROM python:3.9-slim
+        
+        WORKDIR /app
+        
+        RUN apt-get update && apt-get install -y \\
+            build-essential \\
+            curl \\
+            && rm -rf /var/lib/apt/lists/*
+        
+        RUN pip install poetry
+        RUN poetry config virtualenvs.create false
+        
+        # Copiar pyproject.toml
+        COPY pyproject.toml.tmp /app/pyproject.toml
+        
+        # Instalar versión específica
+        RUN poetry add hyblock-capital-sdk==$VERSION
+        
+        # Verificar
+        RUN python -c "import hyblock_capital_sdk; print('✅ SUCCESS: Version $VERSION installed')"
+        RUN python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ SUCCESS: Core components working')"
+        
+        CMD ["python", "-c", "import hyblock_capital_sdk; print('✅ Docker version test completed successfully!')"]
+        EOF
+        
+        # Construir y ejecutar
+        docker build -f Dockerfile.version-test -t hyblock-sdk-version-test .
+        docker run --rm hyblock-sdk-version-test
+        
+        echo "✅ Docker version test passed!"
+    
+    - name: Verify PyPI listing
+      run: |
+        echo "🔍 Verifying PyPI listing..."
+        
+        VERSION=${GITHUB_REF#refs/tags/v}
+        
+        # Verificar que la versión aparece en PyPI
+        if pip index versions hyblock-capital-sdk | grep -q "$VERSION"; then
+          echo "✅ Version $VERSION found in PyPI"
+        else
+          echo "❌ Version $VERSION not found in PyPI"
+          exit 1
+        fi
+        
+        echo "✅ PyPI listing verification passed!"
