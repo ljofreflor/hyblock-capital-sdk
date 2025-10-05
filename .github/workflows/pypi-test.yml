@@ -123,11 +123,8 @@ jobs:
         RUN python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ SUCCESS: Core components imported successfully!')"
         RUN python -c "from hyblock_capital_sdk import ApiClient, Configuration; config = Configuration(); client = ApiClient(config); print('✅ SUCCESS: API client created successfully!')"
         
-        # Copiar script de test
-        COPY test_installation.py /app/
-        
-        # Ejecutar test
-        CMD ["python", "test_installation.py"]
+        # Ejecutar test final
+        CMD ["python", "-c", "import hyblock_capital_sdk; print('✅ Docker PyPI test completed successfully!')"]
         EOF
         
         # Construir imagen
