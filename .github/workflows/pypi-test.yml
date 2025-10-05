@@ -42,6 +42,9 @@ jobs:
         # Inicializar proyecto Poetry con nombre diferente
         poetry init --name test-pypi-installation --version 0.1.0 --description "Test installation from PyPI" --author "Test User <test@example.com>" --no-interaction
         
+        # Verificar que pyproject.toml se creó
+        ls -la pyproject.toml
+        
         # Instalar desde PyPI
         poetry add hyblock-capital-sdk
         
