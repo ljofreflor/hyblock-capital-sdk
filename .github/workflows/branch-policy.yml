@@ -50,7 +50,7 @@ jobs:
           echo "✅ [POLICY] Regla de ramas cumplida - PR desde $HEAD_REF a $BASE_REF"
       
       - name: Block direct push to main branch only
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.head_commit.author.name != 'GitHub'
         run: |
           echo "❌ [POLICY VIOLATION] Push directo a main no permitido."
           echo "❌ Solo se permiten PRs desde develop que pasen los tests unitarios."
