@@ -106,15 +106,28 @@ jobs:
         mkdir -p /tmp/pypi-test
         cd /tmp/pypi-test
         
-        python -m venv pypi-test
-        source pypi-test/bin/activate
+        # Crear pyproject.toml manualmente
+        cat > pyproject.toml << EOF
+        [tool.poetry]
+        name = "test-pypi-installation"
+        version = "0.1.0"
+        description = "Test installation from PyPI"
+        authors = ["Test User <test@example.com>"]
         
-        # Instalar desde PyPI
-        pip install hyblock-capital-sdk
+        [tool.poetry.dependencies]
+        python = "^3.9"
+        
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+        EOF
+        
+        # Instalar desde PyPI usando Poetry
+        poetry add hyblock-capital-sdk
         
         # Verificar instalación
-        python -c "import hyblock_capital_sdk; print('✅ PyPI installation successful')"
-        python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components imported')"
+        poetry run python -c "import hyblock_capital_sdk; print('✅ PyPI installation successful')"
+        poetry run python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components imported')"
         
         # Limpiar directorio temporal
         cd /

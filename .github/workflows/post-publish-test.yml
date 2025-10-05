@@ -16,6 +16,13 @@ jobs:
         echo "⏳ Waiting for PyPI to propagate changes..."
         sleep 60  # Esperar 1 minuto para que PyPI se actualice
     
+    - name: Setup Poetry
+      run: |
+        echo "🐍 Installing Poetry..."
+        curl -sSL https://install.python-poetry.org | python3 -
+        export PATH="$HOME/.local/bin:$PATH"
+        poetry --version
+
     - name: Test published version
       run: |
         echo "🔍 Testing published version..."
@@ -24,25 +31,46 @@ jobs:
         VERSION=${GITHUB_REF#refs/tags/v}
         echo "Testing version: $VERSION"
         
-        # Crear entorno limpio
-        python -m venv test-env
-        source test-env/bin/activate
+        # Crear entorno limpio en directorio temporal
+        mkdir -p /tmp/version-test
+        cd /tmp/version-test
         
-        # Instalar versión específica
-        pip install hyblock-capital-sdk==$VERSION
+        # Crear pyproject.toml manualmente
+        cat > pyproject.toml << EOF
+        [tool.poetry]
+        name = "test-version-installation"
+        version = "0.1.0"
+        description = "Test specific version installation from PyPI"
+        authors = ["Test User <test@example.com>"]
+        
+        [tool.poetry.dependencies]
+        python = "^3.9"
+        
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+        EOF
+        
+        # Instalar versión específica desde PyPI usando Poetry
+        export PATH="$HOME/.local/bin:$PATH"
+        poetry add hyblock-capital-sdk==$VERSION
         
         # Verificar instalación
-        python -c "import hyblock_capital_sdk; print('✅ Version $VERSION installed successfully')"
-        python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components working')"
+        poetry run python -c "import hyblock_capital_sdk; print('✅ Version $VERSION installed successfully')"
+        poetry run python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components working')"
         
         # Verificar que es la versión correcta
-        INSTALLED_VERSION=$(pip show hyblock-capital-sdk | grep Version | cut -d' ' -f2)
+        INSTALLED_VERSION=$(poetry show hyblock-capital-sdk | grep version | cut -d' ' -f4)
         if [ "$INSTALLED_VERSION" = "$VERSION" ]; then
           echo "✅ Correct version installed: $VERSION"
         else
           echo "❌ Version mismatch: expected $VERSION, got $INSTALLED_VERSION"
           exit 1
         fi
+        
+        # Limpiar directorio temporal
+        cd /
+        rm -rf /tmp/version-test
     
     - name: Test with Docker
       run: |
