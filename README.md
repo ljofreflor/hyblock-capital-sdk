@@ -18,7 +18,7 @@ SDK no oficial de Python para la API de Hyblock Capital, generado automáticamen
 - [Ejemplos](#ejemplos)
 - [Desarrollo](#desarrollo)
 - [CI/CD y Publicación](#cicd-y-publicación)
-- [Testing con Docker](#testing-con-docker)
+- [Testing y Validación](#testing-y-validación)
 - [Contribuir](#contribuir)
 - [Licencia](#licencia)
 
@@ -306,26 +306,50 @@ git push origin main
 git push origin v$(poetry version -s)
 ```
 
-## 🐳 Testing con Docker
+## 🧪 Testing y Validación
 
-### Prueba de instalación desde PyPI
+### Validación Automática de PyPI
+
+El proyecto incluye workflows de CI/CD que validan automáticamente:
+
+#### **1. Test de Instalación desde PyPI**
+- Se ejecuta en cada push a `main` y `develop`
+- Verifica que el SDK se puede instalar desde PyPI
+- Prueba tanto con `pip` como con `Poetry`
+- Valida que los componentes principales funcionan
+
+#### **2. Test Post-Publicación**
+- Se ejecuta automáticamente después de crear un tag de versión
+- Verifica que la versión específica se publicó correctamente
+- Confirma que la instalación funciona con la nueva versión
+- Valida que aparece en el listado de PyPI
+
+#### **3. Monitoreo de Versiones**
+- Se ejecuta cada 6 horas
+- Detecta diferencias entre versión del proyecto y PyPI
+- Crea issues automáticamente si hay inconsistencias
+- Verifica que la última versión en PyPI funciona
+
+### Ejecutar Tests Localmente
 
 ```bash
-# Build y ejecutar test
-docker-compose up --build
+# Tests unitarios
+poetry run pytest tests/ -v
 
-# O build manual
-docker build -t hyblock-sdk-test .
-docker run --rm hyblock-sdk-test
+# Tests con cobertura
+poetry run pytest tests/ --cov=hyblock_capital_sdk --cov-report=html
+
+# Verificar instalación desde PyPI
+pip install hyblock-capital-sdk
+python -c "import hyblock_capital_sdk; print('✅ Instalación exitosa')"
 ```
 
-### Qué hace el test
+### Workflows de GitHub Actions
 
-- Crea un proyecto Poetry
-- Instala `hyblock-capital-sdk` desde PyPI
-- Verifica que el SDK se puede importar
-- Prueba la funcionalidad básica
-- Confirma que la instalación funciona correctamente
+- **`ci.yml`**: Pipeline principal con tests, linting y validación de PyPI
+- **`pypi-test.yml`**: Test específico de instalación desde PyPI
+- **`post-publish-test.yml`**: Validación post-publicación
+- **`pypi-monitor.yml`**: Monitoreo continuo de versiones
 
 ## 🤝 Contribuir
 

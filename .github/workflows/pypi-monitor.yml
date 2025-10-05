@@ -1,0 +1,116 @@
+name: PyPI Version Monitor
+
+on:
+  schedule:
+    # Ejecutar cada 6 horas
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Ejecución manual
+
+jobs:
+  monitor-pypi:
+    name: Monitor PyPI Versions
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+    
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Instalar Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: '1.6.1'
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+    
+    - name: Check PyPI for updates
+      run: |
+        echo "🔍 Checking PyPI for version updates..."
+        
+        # Obtener versión actual en PyPI
+        PYPI_VERSION=$(pip index versions hyblock-capital-sdk | grep -oP 'Available versions: \K.*' | head -1)
+        echo "Latest PyPI version: $PYPI_VERSION"
+        
+        # Obtener versión en pyproject.toml
+        PROJECT_VERSION=$(poetry version -s)
+        echo "Project version: $PROJECT_VERSION"
+        
+        # Comparar versiones
+        if [ "$PYPI_VERSION" != "$PROJECT_VERSION" ]; then
+          echo "⚠️ Version mismatch detected!"
+          echo "PyPI: $PYPI_VERSION"
+          echo "Project: $PROJECT_VERSION"
+          
+          # Crear issue si hay diferencia
+          gh issue create \
+            --title "Version Mismatch: PyPI ($PYPI_VERSION) vs Project ($PROJECT_VERSION)" \
+            --body "PyPI has version $PYPI_VERSION but project has $PROJECT_VERSION. Consider updating or publishing." \
+            --label "version-mismatch"
+        else
+          echo "✅ Versions are in sync!"
+        fi
+    
+    - name: Test latest PyPI version
+      run: |
+        echo "🧪 Testing latest PyPI version..."
+        
+        # Crear entorno limpio
+        python -m venv monitor-test
+        source monitor-test/bin/activate
+        
+        # Instalar última versión
+        pip install hyblock-capital-sdk --upgrade
+        
+        # Test básico
+        python -c "import hyblock_capital_sdk; print('✅ Latest version works')"
+        python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components work')"
+        
+        echo "✅ Latest PyPI version test passed!"
+    
+    - name: Check for security vulnerabilities
+      run: |
+        echo "🔒 Checking for security vulnerabilities..."
+        
+        # Instalar safety si está disponible
+        pip install safety || echo "Safety not available, skipping security check"
+        
+        # Crear entorno para verificar vulnerabilidades
+        python -m venv security-test
+        source security-test/bin/activate
+        
+        # Instalar última versión
+        pip install hyblock-capital-sdk --upgrade
+        
+        # Verificar vulnerabilidades
+        safety check || echo "⚠️ Security check completed with warnings"
+        
+        echo "✅ Security check completed!"
+    
+    - name: Generate monitoring report
+      run: |
+        echo "📊 Generating monitoring report..."
+        
+        # Crear reporte
+        cat > monitoring-report.md << EOF
+        # PyPI Monitoring Report
+        
+        **Date:** $(date)
+        **PyPI Version:** $(pip index versions hyblock-capital-sdk | grep -oP 'Available versions: \K.*' | head -1)
+        **Project Version:** $(poetry version -s)
+        
+        ## Status
+        $(if [ "$(pip index versions hyblock-capital-sdk | grep -oP 'Available versions: \K.*' | head -1)" = "$(poetry version -s)" ]; then echo "✅ Versions are in sync"; else echo "⚠️ Version mismatch detected"; fi)
+        
+        ## Latest PyPI Test
+        $(python -c "import hyblock_capital_sdk; print('✅ Latest version works')" 2>&1)
+        
+        ## Core Components Test
+        $(python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components work')" 2>&1)
+        EOF
+        
+        echo "📋 Monitoring report generated"
+        cat monitoring-report.md

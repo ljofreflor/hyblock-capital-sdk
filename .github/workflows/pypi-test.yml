@@ -1,0 +1,140 @@
+name: PyPI Installation Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Ejecutar diariamente a las 6 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Ejecución manual
+
+jobs:
+  test-pypi-installation:
+    name: Test PyPI Installation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+    
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Instalar Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: '1.6.1'
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+    
+    - name: Test PyPI installation with Poetry
+      run: |
+        echo "🐳 Testing PyPI installation with Poetry..."
+        
+        # Crear proyecto temporal
+        mkdir pypi-test
+        cd pypi-test
+        
+        # Inicializar proyecto Poetry
+        poetry init --name test-hyblock-sdk --version 0.1.0 --description "Test installation from PyPI" --author "Test User <test@example.com>" --no-interaction
+        
+        # Instalar desde PyPI
+        poetry add hyblock-capital-sdk
+        
+        # Verificar instalación
+        poetry run python -c "import hyblock_capital_sdk; print('✅ Poetry installation successful')"
+        poetry run python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components imported')"
+        
+        echo "✅ PyPI installation test passed!"
+    
+    - name: Test PyPI installation with pip
+      run: |
+        echo "🐳 Testing PyPI installation with pip..."
+        
+        # Crear entorno virtual
+        python -m venv pip-test-env
+        source pip-test-env/bin/activate
+        
+        # Instalar desde PyPI
+        pip install hyblock-capital-sdk
+        
+        # Verificar instalación
+        python -c "import hyblock_capital_sdk; print('✅ pip installation successful')"
+        python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components imported')"
+        
+        echo "✅ pip installation test passed!"
+    
+    - name: Test with Docker (latest version)
+      run: |
+        echo "🐳 Testing with Docker (latest PyPI version)..."
+        
+        # Crear Dockerfile temporal para test
+        cat > Dockerfile.pypi-test << 'EOF'
+        FROM python:3.9-slim
+        
+        WORKDIR /app
+        
+        # Instalar dependencias del sistema
+        RUN apt-get update && apt-get install -y \
+            build-essential \
+            curl \
+            && rm -rf /var/lib/apt/lists/*
+        
+        # Instalar Poetry
+        RUN pip install poetry
+        RUN poetry config virtualenvs.create false
+        
+        # Crear proyecto temporal
+        RUN poetry init --name test-hyblock-sdk --version 0.1.0 --description "Test installation from PyPI" --author "Test User <test@example.com>" --no-interaction
+        
+        # Instalar desde PyPI (siempre la última versión)
+        RUN poetry add hyblock-capital-sdk
+        
+        # También con pip
+        RUN pip install hyblock-capital-sdk
+        
+        # Verificar instalación
+        RUN python -c "import hyblock_capital_sdk; print('✅ SUCCESS: Library imported successfully from PyPI!')"
+        RUN python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ SUCCESS: Core components imported successfully!')"
+        RUN python -c "from hyblock_capital_sdk import ApiClient, Configuration; config = Configuration(); client = ApiClient(config); print('✅ SUCCESS: API client created successfully!')"
+        
+        # Copiar script de test
+        COPY test_installation.py /app/
+        
+        # Ejecutar test
+        CMD ["python", "test_installation.py"]
+        EOF
+        
+        # Construir imagen
+        docker build -f Dockerfile.pypi-test -t hyblock-sdk-pypi-test .
+        
+        # Ejecutar test
+        docker run --rm hyblock-sdk-pypi-test
+        
+        echo "✅ Docker PyPI test passed!"
+    
+    - name: Check for version updates
+      run: |
+        echo "🔍 Checking for version updates..."
+        
+        # Obtener versión actual en PyPI
+        CURRENT_VERSION=$(pip index versions hyblock-capital-sdk | grep -oP 'Available versions: \K.*' | head -1)
+        echo "Current PyPI version: $CURRENT_VERSION"
+        
+        # Obtener versión en pyproject.toml
+        PROJECT_VERSION=$(poetry version -s)
+        echo "Project version: $PROJECT_VERSION"
+        
+        # Comparar versiones
+        if [ "$CURRENT_VERSION" != "$PROJECT_VERSION" ]; then
+          echo "⚠️ Version mismatch detected!"
+          echo "PyPI: $CURRENT_VERSION"
+          echo "Project: $PROJECT_VERSION"
+          echo "Consider updating the project version or publishing a new release."
+        else
+          echo "✅ Versions match!"
+        fi
