@@ -409,4 +409,4 @@ Si encuentras algún problema o tienes preguntas:
 
 ---
 
-**Desarrollado con ❤️ por la comunidad de Hyblock Capital**
+**Desarrollado con ❤️ para la comunidad de Hyblock Capital**

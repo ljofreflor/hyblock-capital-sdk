@@ -93,6 +93,22 @@ jobs:
       run: |
         echo "🐳 Testing with Docker (latest PyPI version)..."
         
+        # Crear pyproject.toml temporal
+        cat > pyproject.toml.tmp << 'PYPROJ'
+        [tool.poetry]
+        name = "test-hyblock-sdk"
+        version = "0.1.0"
+        description = "Test installation from PyPI"
+        authors = ["Test User <test@example.com>"]
+        
+        [tool.poetry.dependencies]
+        python = "^3.9"
+        
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+        PYPROJ
+        
         # Crear Dockerfile temporal para test
         cat > Dockerfile.pypi-test << 'EOF'
         FROM python:3.9-slim
@@ -109,21 +125,8 @@ jobs:
         RUN pip install poetry
         RUN poetry config virtualenvs.create false
         
-        # Crear pyproject.toml manualmente
-        RUN cat > pyproject.toml << 'EOF'
-        [tool.poetry]
-        name = "test-hyblock-sdk"
-        version = "0.1.0"
-        description = "Test installation from PyPI"
-        authors = ["Test User <test@example.com>"]
-        
-        [tool.poetry.dependencies]
-        python = "^3.9"
-        
-        [build-system]
-        requires = ["poetry-core"]
-        build-backend = "poetry.core.masonry.api"
-        EOF
+        # Copiar pyproject.toml
+        COPY pyproject.toml.tmp /app/pyproject.toml
         
         # Instalar desde PyPI (siempre la última versión)
         RUN poetry add hyblock-capital-sdk
