@@ -2,7 +2,7 @@
 name = "hyblock-capital-sdk"
 version = "0.1.0"
 license = "MIT"
-description = "SDK no oficial para la API de Hyblock Capital - Cliente Python para trading de criptomonedas (Generado con OpenAPI Generator)"
+description = "UNOFFICIAL SDK for Hyblock Capital API - Python client for cryptocurrency trading (Generated with OpenAPI Generator)"
 authors = ["Leonardo Jofre <ljofre2146@gmail.com>"]
 readme = "README.md"
 include = [
@@ -14,9 +14,11 @@ include = [
 homepage = "https://github.com/ljofreflor/hyblock-capital-sdk"
 repository = "https://github.com/ljofreflor/hyblock-capital-sdk"
 documentation = "https://docs.hyblock.capital/sdk"
-keywords = ["trading", "cryptocurrency", "api", "sdk", "hyblock", "capital", "openapi"]
+keywords = ["trading", "cryptocurrency", "api", "sdk", "hyblock", "capital", "openapi", "unofficial"]
 classifiers = [
     "Development Status :: 4 - Beta",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Office/Business :: Financial :: Investment",
     "Intended Audience :: Developers",
     "Intended Audience :: Financial and Insurance Industry",
     "License :: OSI Approved :: MIT License",

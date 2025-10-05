@@ -1,13 +1,14 @@
-# Hyblock Capital SDK
+# Hyblock Capital SDK (Unofficial)
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Poetry](https://img.shields.io/badge/dependency%20manager-poetry-blue)](https://python-poetry.org/)
 [![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-green.svg)](https://swagger.io/specification/)
+[![Unofficial](https://img.shields.io/badge/status-unofficial-orange.svg)](https://github.com/ljofreflor/hyblock-capital-sdk)
 
-SDK no oficial de Python para la API de Hyblock Capital, generado automáticamente desde la especificación OpenAPI/Swagger.
+**⚠️ UNOFFICIAL SDK** - Python SDK for Hyblock Capital API, automatically generated from OpenAPI/Swagger specification.
 
-> **⚠️ Aviso**: Este es un SDK no oficial creado por @leonardojofre. No está afiliado, respaldado o mantenido oficialmente por Hyblock Capital.
+> **🚨 IMPORTANT DISCLAIMER**: This is an **UNOFFICIAL SDK** created by @leonardojofre. It is **NOT affiliated with, endorsed by, or officially maintained** by Hyblock Capital. Use at your own risk.
 
 ## 📋 Tabla de Contenidos
 
