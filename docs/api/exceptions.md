@@ -32,21 +32,21 @@ try:
     # Tu código de API aquí
     result = api.some_method()
 except UnauthorizedException:
-    print("❌ Credenciales inválidas")
+    print("Invalid credentials")
 except ForbiddenException:
-    print("❌ Sin permisos para acceder a este endpoint")
+    print("No permissions to access this endpoint")
 except NotFoundException:
-    print("❌ Recurso no encontrado")
+    print("Resource not found")
 except RateLimitException as e:
     print(f"⏰ Rate limit excedido. Reintentar en {e.retry_after} segundos")
 except BadRequestException as e:
-    print(f"❌ Solicitud inválida: {e}")
+    print(f"Invalid request: {e}")
 except ServiceException as e:
-    print(f"❌ Error del servidor: {e}")
+    print(f"Server error: {e}")
 except ApiException as e:
-    print(f"❌ Error de API: {e.status} - {e.reason}")
+    print(f"API error: {e.status} - {e.reason}")
 except Exception as e:
-    print(f"❌ Error inesperado: {e}")
+    print(f"Unexpected error: {e}")
 ```
 
 ## Códigos de Estado HTTP

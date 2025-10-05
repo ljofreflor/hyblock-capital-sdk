@@ -1,58 +1,58 @@
-# Ejemplos de uso del SDK de Hyblock Capital
+# Hyblock Capital SDK Usage Examples
 
-Este directorio contiene ejemplos prácticos de cómo usar el SDK de Hyblock Capital para diferentes casos de uso.
+This directory contains practical examples of how to use the Hyblock Capital SDK for different use cases.
 
-## Estructura de ejemplos
+## Example Structure
 
-- `basic_usage.py` - Ejemplo básico de configuración y uso del SDK
-- `trading_example.py` - Ejemplos de operaciones de trading
-- `market_data_example.py` - Obtención y procesamiento de datos de mercado
-- `websocket_example.py` - Uso de WebSockets para datos en tiempo real
-- `advanced_features.py` - Características avanzadas del SDK
+- `basic_usage.py` - Basic SDK configuration and usage example
+- `trading_example.py` - Trading operations examples
+- `market_data_example.py` - Market data retrieval and processing
+- `websocket_example.py` - Real-time data using WebSockets
+- `advanced_features.py` - Advanced SDK features
 
-## Requisitos previos
+## Prerequisites
 
-1. **Credenciales de API**: Obtén tus credenciales desde [Hyblock Capital](https://hyblock.capital/api)
-2. **Variables de entorno**: Configura tu archivo `.env` basado en `env.example`
-3. **SDK instalado**: Asegúrate de que el SDK esté instalado y generado
+1. **API Credentials**: Get your credentials from [Hyblock Capital](https://hyblock.capital/api)
+2. **Environment Variables**: Configure your `.env` file based on `env.example`
+3. **SDK Installed**: Make sure the SDK is installed and generated
 
 ```bash
-# Generar el SDK
+# Generate the SDK
 python generate_sdk.py
 
-# Instalar dependencias
+# Install dependencies
 poetry install
 
-# Configurar variables de entorno
+# Configure environment variables
 cp env.example .env
-# Edita .env con tus credenciales reales
+# Edit .env with your real credentials
 ```
 
-## Ejecutar ejemplos
+## Running Examples
 
 ```bash
-# Ejemplo básico
+# Basic example
 poetry run python examples/basic_usage.py
 
-# Ejemplo de trading
+# Trading example
 poetry run python examples/trading_example.py
 
-# Datos de mercado
+# Market data
 poetry run python examples/market_data_example.py
 ```
 
-## Configuración de seguridad
+## Security Configuration
 
-⚠️ **IMPORTANTE**: 
-- Nunca hardcodees credenciales en el código
-- Usa variables de entorno o un gestor de secretos
-- Revisa los permisos de tus API keys
-- Usa credenciales de prueba para desarrollo
+**IMPORTANT**: 
+- Never hardcode credentials in code
+- Use environment variables or a secrets manager
+- Review your API key permissions
+- Use test credentials for development
 
-## Soporte
+## Support
 
-Si encuentras problemas con los ejemplos:
-1. Verifica que tus credenciales sean válidas
-2. Confirma que el SDK esté correctamente generado
-3. Revisa los logs para errores específicos
-4. Consulta la documentación en [docs.hyblock.capital](https://docs.hyblock.capital)
+If you encounter issues with the examples:
+1. Verify that your credentials are valid
+2. Confirm that the SDK is properly generated
+3. Check logs for specific errors
+4. Consult the documentation at [docs.hyblock.capital](https://docs.hyblock.capital)

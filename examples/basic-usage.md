@@ -1,14 +1,14 @@
 # Basic Usage
 
-Esta página contiene ejemplos básicos de uso del SDK de Hyblock Capital.
+This page contains basic usage examples for the Hyblock Capital SDK.
 
-## Configuración Inicial
+## Initial Configuration
 
 ```python
 import hyblock_capital_sdk as hc
 import os
 
-# Configuración básica
+# Basic configuration
 config = hc.Configuration(
     host="https://api1.dev.hyblockcapital.com/v1",
     api_key={"x-api-key": os.getenv("HYBLOCK_API_KEY")}
@@ -17,7 +17,7 @@ config = hc.Configuration(
 api_client = hc.ApiClient(config)
 ```
 
-## Ejemplo 1: Obtener Catálogo
+## Example 1: Get Catalog
 
 ```python
 from hyblock_capital_sdk.api import CatalogApi
@@ -26,19 +26,19 @@ catalog_api = CatalogApi(api_client)
 
 try:
     catalog = catalog_api.catalog_get()
-    print(f"Monedas disponibles: {list(catalog.keys())}")
+    print(f"Available currencies: {list(catalog.keys())}")
 except Exception as e:
     print(f"Error: {e}")
 ```
 
-## Ejemplo 2: Análisis de Pools de Liquidez
+## Example 2: Liquidity Pool Analysis
 
 ```python
 from hyblock_capital_sdk.api import LiquidityApi
 
 liquidity_api = LiquidityApi(api_client)
 
-# Obtener pools acumulativos
+# Get cumulative pools
 pools = liquidity_api.cumulative_liq_level_get(
     coin="BTC",
     timeframe="1h",
@@ -46,15 +46,15 @@ pools = liquidity_api.cumulative_liq_level_get(
     limit=10
 )
 
-print(f"Pools encontrados: {len(pools)}")
+print(f"Pools found: {len(pools)}")
 for pool in pools:
-    print(f"Precio: ${pool.price} | Cantidad: {pool.amount} BTC")
+    print(f"Price: ${pool.price} | Amount: {pool.amount} BTC")
 ```
 
-## Ejemplo 3: Heatmap de Liquidaciones
+## Example 3: Liquidation Heatmap
 
 ```python
-# Obtener heatmap
+# Get heatmap
 heatmap = liquidity_api.liquidation_heatmap_get(
     coin="BTC",
     timeframe="1h",
@@ -62,10 +62,10 @@ heatmap = liquidity_api.liquidation_heatmap_get(
     limit=50
 )
 
-print(f"Heatmap con {len(heatmap)} puntos")
+print(f"Heatmap with {len(heatmap)} points")
 ```
 
-## Ejemplo 4: Manejo de Errores
+## Example 4: Error Handling
 
 ```python
 from hyblock_capital_sdk.exceptions import (
@@ -81,11 +81,11 @@ try:
         exchange="binance"
     )
 except UnauthorizedException:
-    print("❌ Credenciales inválidas")
+    print("Invalid credentials")
 except RateLimitException as e:
-    print(f"⏰ Rate limit excedido. Reintentar en {e.retry_after} segundos")
+    print(f"Rate limit exceeded. Retry in {e.retry_after} seconds")
 except ApiException as e:
-    print(f"❌ Error de API: {e.status} - {e.reason}")
+    print(f"API error: {e.status} - {e.reason}")
 ```
 
 ## Ejemplo Completo
@@ -114,13 +114,13 @@ def main():
     liquidity_api = LiquidityApi(api_client)
     
     try:
-        # 1. Obtener catálogo
-        print("📋 Obteniendo catálogo...")
+        # 1. Get catalog
+        print("Getting catalog...")
         catalog = catalog_api.catalog_get()
-        print(f"✅ Monedas disponibles: {len(catalog)}")
+        print(f"Available currencies: {len(catalog)}")
         
-        # 2. Analizar pools de liquidez para BTC
-        print("\n🏊‍♂️ Analizando pools de liquidez para BTC...")
+        # 2. Analyze liquidity pools for BTC
+        print("\nAnalyzing liquidity pools for BTC...")
         pools = liquidity_api.cumulative_liq_level_get(
             coin="BTC",
             timeframe="1h",
@@ -128,14 +128,14 @@ def main():
             limit=5
         )
         
-        print(f"✅ Pools encontrados: {len(pools)}")
+        print(f"Pools found: {len(pools)}")
         for i, pool in enumerate(pools, 1):
             print(f"  {i}. Precio: ${pool.price} | Cantidad: {pool.amount} BTC")
         
-        print("\n🎉 ¡Ejemplo ejecutado exitosamente!")
+        print("\nExample executed successfully!")
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()

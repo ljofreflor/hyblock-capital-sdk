@@ -95,7 +95,7 @@ print(f"SDK versión: {hc.__version__}")
 
 # Verificar configuración
 config = hc.Configuration(host="https://api1.dev.hyblockcapital.com/v1")
-print("✅ Configuración creada exitosamente")
+print("Configuration created successfully")
 ```
 
 ## Solución de Problemas

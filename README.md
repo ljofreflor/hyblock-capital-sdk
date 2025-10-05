@@ -6,59 +6,59 @@
 [![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-green.svg)](https://swagger.io/specification/)
 [![Unofficial](https://img.shields.io/badge/status-unofficial-orange.svg)](https://github.com/ljofreflor/hyblock-capital-sdk)
 
-**⚠️ UNOFFICIAL SDK** - Python SDK for Hyblock Capital API, automatically generated from OpenAPI/Swagger specification.
+**UNOFFICIAL SDK** - Python SDK for Hyblock Capital API, automatically generated from OpenAPI/Swagger specification.
 
-> **🚨 IMPORTANT DISCLAIMER**: This is an **UNOFFICIAL SDK** created by @leonardojofre. It is **NOT affiliated with, endorsed by, or officially maintained** by Hyblock Capital. Use at your own risk.
+> **IMPORTANT DISCLAIMER**: This is an **UNOFFICIAL SDK** created by @leonardojofre. It is **NOT affiliated with, endorsed by, or officially maintained** by Hyblock Capital. Use at your own risk.
 
-## 📋 Tabla de Contenidos
+## Table of Contents
 
-- [Características](#características)
-- [Instalación](#instalación)
-- [Inicio Rápido](#inicio-rápido)
-- [Uso Básico](#uso-básico)
-- [Ejemplos](#ejemplos)
-- [Desarrollo](#desarrollo)
-- [CI/CD y Publicación](#cicd-y-publicación)
-- [Testing y Validación](#testing-y-validación)
-- [Contribuir](#contribuir)
-- [Licencia](#licencia)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Basic Usage](#basic-usage)
+- [Examples](#examples)
+- [Development](#development)
+- [CI/CD and Publishing](#cicd-and-publishing)
+- [Testing and Validation](#testing-and-validation)
+- [Contributing](#contributing)
+- [License](#license)
 
-## ✨ Características
+## Features
 
-- **Generación automática**: El SDK se genera automáticamente desde la especificación OpenAPI de Hyblock Capital
-- **Completamente tipado**: Soporte completo para type hints y autocompletado en IDEs
-- **Asíncrono**: Soporte para operaciones síncronas y asíncronas
-- **Manejo de errores**: Excepciones personalizadas para diferentes tipos de errores de la API
-- **Documentación integrada**: Documentación generada automáticamente con ejemplos
-- **Testing incluido**: Suite de tests para validar la funcionalidad
-- **Poetry compatible**: Gestión de dependencias moderna y reproducible
+- **Automatic generation**: SDK is automatically generated from Hyblock Capital's OpenAPI specification
+- **Fully typed**: Complete support for type hints and IDE autocompletion
+- **Asynchronous**: Support for both synchronous and asynchronous operations
+- **Error handling**: Custom exceptions for different types of API errors
+- **Integrated documentation**: Automatically generated documentation with examples
+- **Testing included**: Test suite to validate functionality
+- **Poetry compatible**: Modern and reproducible dependency management
 
-## 🚀 Instalación
+## Installation
 
-### Desde PyPI
+### From PyPI
 
 ```bash
 pip install hyblock-capital-sdk
 ```
 
-### Con Poetry (Recomendado)
+### With Poetry (Recommended)
 
-**Opción 1: Desde PyPI**
+**Option 1: From PyPI**
 ```bash
 poetry add hyblock-capital-sdk
 ```
 
-**Opción 2: Desde el repositorio**
+**Option 2: From repository**
 ```bash
 poetry add git+https://github.com/ljofreflor/hyblock-capital-sdk.git
 ```
 
-**Opción 3: Para desarrollo**
+**Option 3: For development**
 ```bash
 poetry add git+https://github.com/ljofreflor/hyblock-capital-sdk.git --editable
 ```
 
-### Desarrollo local
+### Local development
 
 ```bash
 git clone https://github.com/ljofreflor/hyblock-capital-sdk.git
@@ -66,64 +66,64 @@ cd hyblock-capital-sdk
 poetry install --with dev
 ```
 
-## ⚡ Inicio Rápido
+## Quick Start
 
-### Prerrequisitos
+### Prerequisites
 
-Asegúrate de tener instalado:
-- **Python 3.8.1+** (recomendado 3.11.12)
-- **Poetry** (gestor de dependencias)
-- **Java 8+** (requerido por OpenAPI Generator)
-- **pyenv** (recomendado para gestión de versiones)
+Make sure you have installed:
+- **Python 3.8.1+** (recommended 3.11.12)
+- **Poetry** (dependency manager)
+- **Java 8+** (required by OpenAPI Generator)
+- **pyenv** (recommended for version management)
 
 ```bash
-# Verificar versiones
+# Check versions
 python --version
 poetry --version
 java -version
 ```
 
-### Configuración rápida
+### Quick setup
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/ljofreflor/hyblock-capital-sdk.git
 cd hyblock-capital-sdk
 
-# Configurar versión de Python (recomendado)
+# Configure Python version (recommended)
 pyenv local 3.11.12
 
-# Instalar dependencias
+# Install dependencies
 poetry install --with dev
 
-# Verificar instalación
-poetry run python -c "import hyblock_capital_sdk; print('✅ SDK instalado correctamente')"
+# Verify installation
+poetry run python -c "import hyblock_capital_sdk; print('SDK installed correctly')"
 ```
 
-## 💻 Uso Básico
+## Basic Usage
 
-### Configuración básica
+### Basic configuration
 
 ```python
 from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi
 
-# Configurar el cliente
+# Configure the client
 config = Configuration()
 client = ApiClient(config)
 
-# Crear instancia de la API
+# Create API instance
 catalog_api = CatalogApi(client)
 
-# Usar la API
+# Use the API
 try:
-    # Ejemplo: obtener información del catálogo
+    # Example: get catalog information
     response = catalog_api.get_catalog()
-    print(f"Respuesta: {response}")
+    print(f"Response: {response}")
 except Exception as e:
     print(f"Error: {e}")
 ```
 
-### Uso asíncrono
+### Asynchronous usage
 
 ```python
 import asyncio
@@ -144,9 +144,9 @@ async def main():
 asyncio.run(main())
 ```
 
-## 📚 Ejemplos
+## Examples
 
-### Ejemplo básico
+### Basic example
 
 ```python
 from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi
@@ -195,111 +195,111 @@ if __name__ == "__main__":
     main()
 ```
 
-## 🔧 Desarrollo
+## Development
 
-### Generación del SDK
+### SDK Generation
 
-El SDK se genera automáticamente desde la especificación OpenAPI de Hyblock Capital:
+The SDK is automatically generated from Hyblock Capital's OpenAPI specification:
 
 ```bash
-# Generar SDK localmente
+# Generate SDK locally
 ./generate_sdk.sh
 
-# Verificar cambios
+# Check changes
 git status
 git diff
 
-# Committear cambios
+# Commit changes
 git add .
 git commit -m "chore: regenerate SDK from OpenAPI"
 ```
 
-### Estructura del proyecto
+### Project structure
 
 ```
 hyblock-capital-sdk/
-├── README.md                    # Este archivo
-├── pyproject.toml              # Configuración Poetry
-├── openapi-generator-config.json # Config OpenAPI Generator
-├── generate_sdk.sh             # Script de generación
-├── Makefile                    # Automatización de comandos
-├── .gitignore                  # Exclusiones de Git
-├── env.example                 # Ejemplo de variables de entorno
-├── hyblock_capital_sdk/        # SDK generado
+├── README.md                    # This file
+├── pyproject.toml              # Poetry configuration
+├── openapi-generator-config.json # OpenAPI Generator config
+├── generate_sdk.sh             # Generation script
+├── Makefile                    # Command automation
+├── .gitignore                  # Git exclusions
+├── env.example                 # Environment variables example
+├── hyblock_capital_sdk/        # Generated SDK
 │   ├── __init__.py
-│   ├── api/                    # APIs generadas
-│   ├── models/                 # Modelos de datos
+│   ├── api/                    # Generated APIs
+│   ├── models/                 # Data models
 │   ├── api_client.py
 │   ├── configuration.py
 │   └── exceptions.py
-├── tests/                      # Tests del SDK
-├── examples/                   # Ejemplos de uso
-└── docs/                       # Documentación
+├── tests/                      # SDK tests
+├── examples/                   # Usage examples
+└── docs/                       # Documentation
 ```
 
-### Comandos de desarrollo
+### Development commands
 
 ```bash
-# Instalar dependencias
+# Install dependencies
 poetry install --with dev
 
-# Ejecutar tests
+# Run tests
 poetry run pytest
 
 # Linting
 poetry run flake8 hyblock_capital_sdk/
 
-# Formatear código
+# Format code
 poetry run black hyblock_capital_sdk/
 
-# Generar SDK
+# Generate SDK
 ./generate_sdk.sh
 
-# Build del paquete
+# Build package
 poetry build
 
-# Publicar en PyPI
+# Publish to PyPI
 poetry publish
 ```
 
-## 🚀 CI/CD y Publicación
+## CI/CD and Publishing
 
-### Configuración de GitHub Secrets
+### GitHub Secrets Configuration
 
-Para automatizar la publicación en PyPI, configura estos secrets en GitHub:
+To automate publishing to PyPI, configure these secrets in GitHub:
 
-1. **Ve a tu repositorio** → Settings → Secrets and variables → Actions
-2. **Crea estos secrets:**
-   - `PYPI_TOKEN`: Token de PyPI (producción)
-   - `TEST_PYPI_TOKEN`: Token de TestPyPI (testing)
+1. **Go to your repository** → Settings → Secrets and variables → Actions
+2. **Create these secrets:**
+   - `PYPI_TOKEN`: PyPI token (production)
+   - `TEST_PYPI_TOKEN`: TestPyPI token (testing)
 
-### Obtener tokens de PyPI
+### Get PyPI Tokens
 
-#### Para PyPI (Producción):
-1. Ve a [PyPI.org](https://pypi.org) → Account settings → API tokens
-2. Crea un token con nombre `hyblock-capital-sdk-ci`
-3. **Copia el token generado** (formato: `pypi-...`) - **NO lo compartas**
+#### For PyPI (Production):
+1. Go to [PyPI.org](https://pypi.org) → Account settings → API tokens
+2. Create a token named `hyblock-capital-sdk-ci`
+3. **Copy the generated token** (format: `pypi-...`) - **DO NOT share it**
 
-#### Para TestPyPI (Testing):
-1. Ve a [TestPyPI.org](https://test.pypi.org) → Account settings → API tokens
-2. Crea un token con nombre `hyblock-capital-sdk-test-ci`
-3. **Copia el token generado** (formato: `pypi-...`) - **NO lo compartas**
+#### For TestPyPI (Testing):
+1. Go to [TestPyPI.org](https://test.pypi.org) → Account settings → API tokens
+2. Create a token named `hyblock-capital-sdk-test-ci`
+3. **Copy the generated token** (format: `pypi-...`) - **DO NOT share it**
 
-### Flujo de publicación
+### Publishing workflow
 
-1. **Push a main/develop** → Ejecuta tests y linting
-2. **Crear tag** → Ejecuta publicación automática a PyPI
-3. **Pull Request** → Ejecuta tests y publicación a TestPyPI
+1. **Push to main/develop** → Runs tests and linting
+2. **Create tag** → Executes automatic publication to PyPI
+3. **Pull Request** → Runs tests and publishes to TestPyPI
 
-### Comandos para publicar
+### Publishing commands
 
 ```bash
-# Incrementar versión
+# Increment version
 poetry version patch  # 0.1.0 → 0.1.1
 poetry version minor  # 0.1.0 → 0.2.0
 poetry version major  # 0.1.0 → 1.0.0
 
-# Crear tag y push
+# Create tag and push
 git add pyproject.toml
 git commit -m "chore: bump version to $(poetry version -s)"
 git tag v$(poetry version -s)
@@ -307,76 +307,76 @@ git push origin main
 git push origin v$(poetry version -s)
 ```
 
-## 🧪 Testing y Validación
+## Testing and Validation
 
-### Validación Automática de PyPI
+### Automatic PyPI Validation
 
-El proyecto incluye workflows de CI/CD que validan automáticamente:
+The project includes CI/CD workflows that automatically validate:
 
-#### **1. Test de Instalación desde PyPI**
-- Se ejecuta en cada push a `main` y `develop`
-- Verifica que el SDK se puede instalar desde PyPI
-- Prueba tanto con `pip` como con `Poetry`
-- Valida que los componentes principales funcionan
+#### **1. PyPI Installation Test**
+- Runs on every push to `main` and `develop`
+- Verifies that the SDK can be installed from PyPI
+- Tests with both `pip` and `Poetry`
+- Validates that main components work
 
-#### **2. Test Post-Publicación**
-- Se ejecuta automáticamente después de crear un tag de versión
-- Verifica que la versión específica se publicó correctamente
-- Confirma que la instalación funciona con la nueva versión
-- Valida que aparece en el listado de PyPI
+#### **2. Post-Publication Test**
+- Runs automatically after creating a version tag
+- Verifies that the specific version was published correctly
+- Confirms that installation works with the new version
+- Validates that it appears in the PyPI listing
 
-#### **3. Monitoreo de Versiones**
-- Se ejecuta cada 6 horas
-- Detecta diferencias entre versión del proyecto y PyPI
-- Crea issues automáticamente si hay inconsistencias
-- Verifica que la última versión en PyPI funciona
+#### **3. Version Monitoring**
+- Runs every 6 hours
+- Detects differences between project version and PyPI
+- Creates issues automatically if there are inconsistencies
+- Verifies that the latest version on PyPI works
 
-### Ejecutar Tests Localmente
+### Run Tests Locally
 
 ```bash
-# Tests unitarios
+# Unit tests
 poetry run pytest tests/ -v
 
-# Tests con cobertura
+# Tests with coverage
 poetry run pytest tests/ --cov=hyblock_capital_sdk --cov-report=html
 
-# Verificar instalación desde PyPI
+# Verify installation from PyPI
 pip install hyblock-capital-sdk
-python -c "import hyblock_capital_sdk; print('✅ Instalación exitosa')"
+python -c "import hyblock_capital_sdk; print('Installation successful')"
 ```
 
-### Workflows de GitHub Actions
+### GitHub Actions Workflows
 
-- **`ci.yml`**: Pipeline principal con tests, linting y validación de PyPI
-- **`pypi-test.yml`**: Test específico de instalación desde PyPI
-- **`post-publish-test.yml`**: Validación post-publicación
-- **`pypi-monitor.yml`**: Monitoreo continuo de versiones
+- **`ci.yml`**: Main pipeline with tests, linting and PyPI validation
+- **`pypi-test.yml`**: Specific PyPI installation test
+- **`post-publish-test.yml`**: Post-publication validation
+- **`pypi-monitor.yml`**: Continuous version monitoring
 
-## 🤝 Contribuir
+## Contributing
 
-### Flujo de contribución
+### Contribution workflow
 
-1. **Fork** el repositorio
-2. **Crea** una rama para tu feature: `git checkout -b feature/nueva-funcionalidad`
-3. **Commit** tus cambios: `git commit -m 'feat: agregar nueva funcionalidad'`
-4. **Push** a la rama: `git push origin feature/nueva-funcionalidad`
-5. **Abre** un Pull Request
+1. **Fork** the repository
+2. **Create** a branch for your feature: `git checkout -b feature/new-functionality`
+3. **Commit** your changes: `git commit -m 'feat: add new functionality'`
+4. **Push** to the branch: `git push origin feature/new-functionality`
+5. **Open** a Pull Request
 
-### Estándares de código
+### Code standards
 
 - **Python 3.8+** compatible
-- **Type hints** obligatorios
-- **Docstrings** para todas las funciones públicas
-- **Tests** para nueva funcionalidad
-- **Linting** con flake8 y black
+- **Type hints** required
+- **Docstrings** for all public functions
+- **Tests** for new functionality
+- **Linting** with flake8 and black
 
-### Comandos de contribución
+### Contribution commands
 
 ```bash
-# Instalar dependencias de desarrollo
+# Install development dependencies
 poetry install --with dev
 
-# Ejecutar tests
+# Run tests
 poetry run pytest
 
 # Linting
@@ -384,38 +384,38 @@ poetry run flake8 hyblock_capital_sdk/
 poetry run black hyblock_capital_sdk/
 poetry run isort hyblock_capital_sdk/
 
-# Verificar tipos
+# Type checking
 poetry run mypy hyblock_capital_sdk/
 ```
 
-## 📄 Licencia
+## License
 
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🧹 Limpieza Automática de Ramas
+## Automatic Branch Cleanup
 
-El proyecto incluye un sistema automático de limpieza de ramas:
+The project includes an automatic branch cleanup system:
 
-- **Eliminación automática**: Las ramas `feature/*`, `fix/*`, `hotfix/*` se eliminan automáticamente después del merge
-- **Protección**: Las ramas `main` y `develop` nunca se eliminan
-- **Workflow**: `.github/workflows/cleanup-branches.yml` maneja la limpieza automática
+- **Automatic deletion**: `feature/*`, `fix/*`, `hotfix/*` branches are automatically deleted after merge
+- **Protection**: `main` and `develop` branches are never deleted
+- **Workflow**: `.github/workflows/cleanup-branches.yml` handles automatic cleanup
 
-## 🔗 Enlaces Útiles
+## Useful Links
 
-- **Repositorio**: [GitHub](https://github.com/ljofreflor/hyblock-capital-sdk)
+- **Repository**: [GitHub](https://github.com/ljofreflor/hyblock-capital-sdk)
 - **PyPI**: [hyblock-capital-sdk](https://pypi.org/project/hyblock-capital-sdk/)
-- **Documentación**: [MkDocs](https://ljofreflor.github.io/hyblock-capital-sdk/)
-- **API de Hyblock Capital**: [Documentación](https://media.hyblockcapital.com/document/swagger-dev.json)
+- **Documentation**: [MkDocs](https://ljofreflor.github.io/hyblock-capital-sdk/)
+- **Hyblock Capital API**: [Documentation](https://media.hyblockcapital.com/document/swagger-dev.json)
 
-## 🆘 Soporte
+## Support
 
-Si encuentras algún problema o tienes preguntas:
+If you encounter any issues or have questions:
 
-1. **Revisa** la documentación
-2. **Busca** en los issues existentes
-3. **Crea** un nuevo issue si es necesario
-4. **Contacta** al mantenedor: ljofre2146@gmail.com
+1. **Check** the documentation
+2. **Search** existing issues
+3. **Create** a new issue if needed
+4. **Contact** the maintainer: ljofre2146@gmail.com
 
 ---
 
-**Desarrollado con ❤️ para la comunidad de Hyblock Capital**
+**Developed for the Hyblock Capital community**

@@ -55,11 +55,11 @@ from hyblock_capital_sdk.exceptions import (
 try:
     result = options_api.some_method()
 except UnauthorizedException:
-    print("❌ Credenciales inválidas")
+    print("Invalid credentials")
 except RateLimitException as e:
     print(f"⏰ Rate limit excedido. Reintentar en {e.retry_after} segundos")
 except ApiException as e:
-    print(f"❌ Error de API: {e.status} - {e.reason}")
+    print(f"API error: {e.status} - {e.reason}")
 ```
 
 Para más información sobre métodos específicos, consulta la referencia de la API arriba.

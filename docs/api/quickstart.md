@@ -2,7 +2,7 @@
 
 This guide will help you get started with the **UNOFFICIAL** Hyblock Capital SDK in less than 5 minutes.
 
-> **⚠️ DISCLAIMER**: This is an **UNOFFICIAL SDK** created by @leonardojofre. It is **NOT affiliated with, endorsed by, or officially maintained** by Hyblock Capital. Use at your own risk.
+> **DISCLAIMER**: This is an **UNOFFICIAL SDK** created by @leonardojofre. It is **NOT affiliated with, endorsed by, or officially maintained** by Hyblock Capital. Use at your own risk.
 
 ## 1. Installation
 
@@ -164,13 +164,13 @@ try:
         exchange="binance"
     )
 except UnauthorizedException:
-    print("❌ Invalid credentials")
+    print("Invalid credentials")
 except RateLimitException as e:
-    print(f"⏰ Rate limit exceeded. Retry in {e.retry_after} seconds")
+    print(f"Rate limit exceeded. Retry in {e.retry_after} seconds")
 except ApiException as e:
-    print(f"❌ API error: {e.status} - {e.reason}")
+    print(f"API error: {e.status} - {e.reason}")
 except Exception as e:
-    print(f"❌ Unexpected error: {e}")
+    print(f"Unexpected error: {e}")
 ```
 
 ## 6. Complete Example Script
@@ -200,12 +200,12 @@ def main():
     
     try:
         # 1. Get catalog
-        print("📋 Getting catalog...")
+        print("Getting catalog...")
         catalog = catalog_api.catalog_get()
-        print(f"✅ Available currencies: {len(catalog)}")
+        print(f"Available currencies: {len(catalog)}")
         
         # 2. Analyze liquidity pools for BTC
-        print("\n🏊‍♂️ Analyzing liquidity pools for BTC...")
+        print("\nAnalyzing liquidity pools for BTC...")
         pools = liquidity_api.cumulative_liq_level_get(
             coin="BTC",
             timeframe="1h",
@@ -213,25 +213,25 @@ def main():
             limit=5
         )
         
-        print(f"✅ Pools found: {len(pools)}")
+        print(f"Pools found: {len(pools)}")
         for i, pool in enumerate(pools, 1):
             print(f"  {i}. Price: ${pool.price} | Amount: {pool.amount} BTC")
         
         # 3. Liquidation heatmap
-        print("\n🔥 Getting heatmap...")
+        print("\nGetting heatmap...")
         heatmap = liquidity_api.liquidation_heatmap_get(
             coin="BTC",
             timeframe="1h",
             exchange="binance",
             limit=20
         )
-        print(f"✅ Heatmap: {len(heatmap)} points")
+        print(f"Heatmap: {len(heatmap)} points")
         
-        print("\n🎉 Script executed successfully!")
+        print("\nScript executed successfully!")
         
     except Exception as e:
-        print(f"❌ Error: {e}")
-        print("💡 Check your API key and internet connection")
+        print(f"Error: {e}")
+        print("Check your API key and internet connection")
 
 if __name__ == "__main__":
     main()

@@ -66,20 +66,20 @@ print(f"Pools de liquidez: {len(pools)}")
 
 ## APIs Disponibles
 
-### 📊 Liquidez y Liquidaciones
+### Liquidity and Liquidations
 - **LiquidityApi**: Análisis de pools de liquidez y riesgo de liquidación
 - **LiquidationApi**: Eventos históricos de liquidación
 
-### 📈 Datos de Mercado
+### Market Data
 - **OrderbookApi**: Libros de órdenes en tiempo real
 - **OrderflowApi**: Flujo de órdenes y análisis de mercado
 - **OpenInterestApi**: Interés abierto y análisis de posiciones
 
-### 💰 Trading y Posiciones
+### Trading and Positions
 - **LongsAndShortsApi**: Análisis de posiciones largas y cortas
 - **FundingRateApi**: Tasas de financiamiento
 
-### 📋 Utilidades
+### Utilities
 - **CatalogApi**: Catálogo de monedas y exchanges disponibles
 - **SentimentApi**: Análisis de sentimiento del mercado
 - **OptionsApi**: Datos de opciones (si están disponibles)
