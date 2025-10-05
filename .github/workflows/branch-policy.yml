@@ -49,12 +49,20 @@ jobs:
           
           echo "✅ [POLICY] Regla de ramas cumplida - PR desde $HEAD_REF a $BASE_REF"
       
-      - name: Block direct push to main branch only
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Block direct push to protected branches
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
         run: |
-          echo "❌ [POLICY VIOLATION] Push directo a main no permitido."
-          echo "❌ Solo se permiten PRs desde develop que pasen los tests unitarios."
-          echo "❌ Usa: git push origin develop y crea un PR"
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "❌ [POLICY VIOLATION] Push directo a main no permitido."
+            echo "❌ Solo se permiten PRs desde develop que pasen los tests unitarios."
+            echo "❌ Flujo: feature/* → develop → main"
+            echo "❌ Usa: git push origin develop y crea un PR"
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            echo "❌ [POLICY VIOLATION] Push directo a develop no permitido."
+            echo "❌ Solo se permiten PRs desde ramas feature/*, fix/* o hotfix/*."
+            echo "❌ Flujo: feature/* → develop → main"
+            echo "❌ Usa: git push origin feature/tu-feature y crea un PR"
+          fi
           exit 1
       
       - name: Setup Python and Poetry

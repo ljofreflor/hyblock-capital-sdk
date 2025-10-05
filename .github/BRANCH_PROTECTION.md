@@ -16,11 +16,29 @@
 - ✅ **Linting automático** - Verificación de código
 - ✅ **Solo PRs desde feature/*, fix/*, hotfix/***
 - ✅ **Base para nuevas ramas** - Todas las ramas deben crearse desde develop
+- ✅ **Única fuente para main** - Solo desde develop se puede hacer PR a main
 
 ### **Ramas `feature/*`, `fix/*`, `hotfix/*` (Desarrollo)**
 - ✅ **Push directo permitido** - Para desarrollo de features/fixes
 - ✅ **Merge a `develop`** - Via PR con tests obligatorios
 - ✅ **Tests automáticos** - En cada PR a develop
+
+## 🔄 Flujo de Trabajo Git Flow
+
+### **Flujo Estricto: feature → develop → main**
+
+```
+feature/nueva-funcionalidad
+    ↓ (PR + Tests)
+develop
+    ↓ (PR + Tests + Review)
+main (producción)
+```
+
+### **Reglas de Flujo:**
+1. **feature/* → develop**: Solo PRs desde ramas feature/fix/hotfix
+2. **develop → main**: Solo PRs desde develop (única fuente)
+3. **No saltos**: No se permiten PRs directos de feature/* a main
 
 ## 🔧 Configuración Automática
 
