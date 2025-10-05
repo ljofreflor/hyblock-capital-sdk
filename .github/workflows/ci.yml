@@ -102,7 +102,10 @@ jobs:
       run: |
         echo "🧪 Testing PyPI installation..."
         
-        # Crear entorno limpio
+        # Crear entorno limpio en directorio temporal
+        mkdir -p /tmp/pypi-test
+        cd /tmp/pypi-test
+        
         python -m venv pypi-test
         source pypi-test/bin/activate
         
@@ -112,6 +115,10 @@ jobs:
         # Verificar instalación
         python -c "import hyblock_capital_sdk; print('✅ PyPI installation successful')"
         python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components imported')"
+        
+        # Limpiar directorio temporal
+        cd /
+        rm -rf /tmp/pypi-test
         
         echo "✅ PyPI installation test passed!"
     

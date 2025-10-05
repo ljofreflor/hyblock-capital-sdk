@@ -35,12 +35,12 @@ jobs:
       run: |
         echo "🐳 Testing PyPI installation with Poetry..."
         
-        # Crear proyecto temporal
-        mkdir pypi-test
-        cd pypi-test
+        # Crear directorio temporal fuera del proyecto actual
+        mkdir -p /tmp/pypi-test
+        cd /tmp/pypi-test
         
-        # Inicializar proyecto Poetry
-        poetry init --name test-hyblock-sdk --version 0.1.0 --description "Test installation from PyPI" --author "Test User <test@example.com>" --no-interaction
+        # Inicializar proyecto Poetry con nombre diferente
+        poetry init --name test-pypi-installation --version 0.1.0 --description "Test installation from PyPI" --author "Test User <test@example.com>" --no-interaction
         
         # Instalar desde PyPI
         poetry add hyblock-capital-sdk
@@ -48,6 +48,10 @@ jobs:
         # Verificar instalación
         poetry run python -c "import hyblock_capital_sdk; print('✅ Poetry installation successful')"
         poetry run python -c "from hyblock_capital_sdk import ApiClient, Configuration, CatalogApi; print('✅ Core components imported')"
+        
+        # Limpiar directorio temporal
+        cd /
+        rm -rf /tmp/pypi-test
         
         echo "✅ PyPI installation test passed!"
     
