@@ -391,6 +391,14 @@ poetry run mypy hyblock_capital_sdk/
 
 Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
 
+## 🧹 Limpieza Automática de Ramas
+
+El proyecto incluye un sistema automático de limpieza de ramas:
+
+- **Eliminación automática**: Las ramas `feature/*`, `fix/*`, `hotfix/*` se eliminan automáticamente después del merge
+- **Protección**: Las ramas `main` y `develop` nunca se eliminan
+- **Workflow**: `.github/workflows/cleanup-branches.yml` maneja la limpieza automática
+
 ## 🔗 Enlaces Útiles
 
 - **Repositorio**: [GitHub](https://github.com/ljofreflor/hyblock-capital-sdk)

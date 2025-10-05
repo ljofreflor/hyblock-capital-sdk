@@ -217,6 +217,43 @@ graph TD
     L --> K
 ```
 
+## 🧹 Limpieza Automática de Ramas
+
+### Eliminación Automática
+
+El proyecto incluye un workflow automático que elimina las ramas después del merge:
+
+- **Cuándo se activa**: Después de que un PR es mergeado exitosamente
+- **Qué ramas se eliminan**: Solo ramas que siguen la convención `feature/*`, `fix/*`, `hotfix/*`
+- **Qué ramas se protegen**: `main` y `develop` nunca se eliminan automáticamente
+
+### Workflow de Limpieza
+
+```yaml
+# .github/workflows/cleanup-branches.yml
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  cleanup-branches:
+    if: github.event.pull_request.merged == true
+    # Elimina automáticamente la rama mergeada
+```
+
+### Beneficios
+
+- ✅ **Mantiene el repositorio limpio**
+- ✅ **Evita acumulación de ramas obsoletas**
+- ✅ **Reduce confusión en el equipo**
+- ✅ **Solo elimina ramas que siguen convenciones**
+
+### Excepciones
+
+- **Ramas protegidas**: `main`, `develop`
+- **Ramas sin convención**: No se eliminan automáticamente
+- **PRs cerrados sin merge**: No se eliminan
+
 ## 📚 Referencias
 
 - [GitHub Branch Protection](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches)

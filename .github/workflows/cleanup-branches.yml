@@ -1,0 +1,42 @@
+name: Cleanup Branches
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  cleanup-branches:
+    name: Cleanup Merged Branches
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    
+    steps:
+      - name: Delete merged branch
+        run: |
+          echo "🧹 Limpiando rama mergeada: ${{ github.head_ref }}"
+          
+          # Verificar que no sea una rama protegida
+          if [[ "${{ github.head_ref }}" == "main" || "${{ github.head_ref }}" == "develop" ]]; then
+            echo "⚠️ No se puede eliminar rama protegida: ${{ github.head_ref }}"
+            exit 0
+          fi
+          
+          # Verificar que sea una rama de feature, fix o hotfix
+          if [[ "${{ github.head_ref }}" =~ ^(feature|fix|hotfix)/ ]]; then
+            echo "✅ Eliminando rama: ${{ github.head_ref }}"
+            
+            # Eliminar rama local
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+            git fetch origin
+            git branch -D "${{ github.head_ref }}" || true
+            
+            # Eliminar rama remota
+            git push origin --delete "${{ github.head_ref }}" || true
+            
+            echo "✅ Rama ${{ github.head_ref }} eliminada exitosamente"
+          else
+            echo "⚠️ Rama no sigue convención (feature/*, fix/*, hotfix/*): ${{ github.head_ref }}"
+            echo "ℹ️ Solo se eliminan automáticamente ramas que sigan el patrón feature/*, fix/*, hotfix/*"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
