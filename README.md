@@ -7,7 +7,7 @@
 
 SDK no oficial de Python para la API de Hyblock Capital, generado automáticamente desde la especificación OpenAPI/Swagger.
 
-> **⚠️ Aviso**: Este es un SDK no oficial creado por la comunidad. No está afiliado, respaldado o mantenido oficialmente por Hyblock Capital.
+> **⚠️ Aviso**: Este es un SDK no oficial creado por @leonardojofre. No está afiliado, respaldado o mantenido oficialmente por Hyblock Capital.
 
 ## 📋 Tabla de Contenidos
 
