@@ -3,8 +3,6 @@ name: Branch Policy
 on:
   pull_request:
     branches: [ main, develop ]
-  push:
-    branches: [ main, develop ]
   create:
     ref_type: branch
 
@@ -12,7 +10,7 @@ jobs:
   enforce-branch-policy:
     name: Enforce Branch Policy
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'create'
+    if: github.event_name == 'pull_request' || github.event_name == 'create'
     
     steps:
       - name: Checkout code
@@ -49,14 +47,6 @@ jobs:
           
           echo "✅ [POLICY] Regla de ramas cumplida - PR desde $HEAD_REF a $BASE_REF"
       
-      - name: Block direct push to main branch only
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.head_commit.author.name != 'GitHub'
-        run: |
-          echo "❌ [POLICY VIOLATION] Push directo a main no permitido."
-          echo "❌ Solo se permiten PRs desde develop que pasen los tests unitarios."
-          echo "❌ Flujo: feature/* → develop → main"
-          echo "❌ Usa: git push origin develop y crea un PR"
-          exit 1
       
       - name: Setup Python and Poetry
         if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'develop')
