@@ -63,16 +63,33 @@ jobs:
           fi
           exit 1
       
+      - name: Setup Python and Poetry
+        if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'develop')
+        run: |
+          echo "🐍 Configurando Python y Poetry..."
+          
+          # Verificar que Python esté disponible
+          python --version || python3 --version
+          
+          # Instalar Poetry si no está disponible
+          if ! command -v poetry &> /dev/null; then
+            echo "📦 Instalando Poetry..."
+            curl -sSL https://install.python-poetry.org | python3 -
+            export PATH="$HOME/.local/bin:$PATH"
+          fi
+          
+          # Verificar que Poetry esté disponible
+          poetry --version
+          
+          echo "✅ Python y Poetry configurados correctamente"
+
       - name: Run unit tests for PR validation
         if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'develop')
         run: |
           echo "🧪 Ejecutando tests unitarios para validar PR..."
           
-          # Verificar que Python esté disponible
-          python --version || python3 --version
-          
-          # Verificar que Poetry esté disponible
-          poetry --version
+          # Asegurar que Poetry esté en el PATH
+          export PATH="$HOME/.local/bin:$PATH"
           
           # Instalar dependencias
           poetry install --with dev
